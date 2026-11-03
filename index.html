@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#E6EDF6">
+<title>Dhofar Health Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>/* ================= TOKENS ================= */
+:root{
+  --u: min(100vw / 1280, 100vh / 960);
+  --t: var(--u);
+  --pad: 0;
+  --ink:#020C21; --ink-soft:#0F182F; --ink-2:#39455F; --muted:#59627E; --muted2:#4D5B77;
+  --frame:#E6EDF6; --bg:#F2F5F9; --surface:#FFFFFF; --surface-2:#F6F8FB; --line:rgba(15,27,49,.09); --line-2:rgba(15,27,49,.16);
+  --cta:#0F1B31; --cta-ink:#fff; --cta-knob:#384B64; --meet-knob:#1A2B45;
+  --accent:#4A78B0; --track:#DDE4EE; --track-fill:#5F88B4;
+  --glass:rgba(255,255,255,.78); --glass-brd:rgba(255,255,255,.85); --glass-ring:rgba(120,145,180,.2);
+  --panel-a:rgba(255,255,255,.44); --panel-b:rgba(255,255,255,.16); --panel-brd:rgba(255,255,255,.6);
+  --nav-ink:#202940; --nav-div:#CED5E0;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#6250d6;
+  --q100:#cde2fb; --q250:#86b6ef; --q400:#3987e5; --q550:#1c5cab; --q700:#0d366b;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b; --info:#2a78d6; --none:#9aa3b5;
+  --good-bg:rgba(12,163,12,.10); --warn-bg:rgba(250,178,25,.16); --serious-bg:rgba(236,131,90,.15); --crit-bg:rgba(208,59,59,.11); --info-bg:rgba(42,120,214,.10); --none-bg:rgba(120,130,150,.10);
+  --shadow:0 1px 2px rgba(15,27,49,.04),0 8px 24px rgba(15,27,49,.05);
+  --plate-1:#F4F7FB; --plate-2:#DCE6F2; --plate-3:#C9D7EA;
+  --font:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+@supports (height:100dvh){:root{--u: min(100vw / 1280, 100dvh / 960)}}
+:root[data-theme="dark"]{
+  --ink:#EEF3FA; --ink-soft:#DCE4F0; --ink-2:#B9C4D8; --muted:#8C98B0; --muted2:#9AA6BD;
+  --frame:#081020; --bg:#0A1120; --surface:#111A2B; --surface-2:#162236; --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.16);
+  --cta:#E8EEF7; --cta-ink:#0B1424; --cta-knob:#C3CFE0; --meet-knob:#2F4566;
+  --accent:#6E9BD3; --track:#26344B; --track-fill:#6E9BD3;
+  --glass:rgba(22,33,52,.62); --glass-brd:rgba(255,255,255,.10); --glass-ring:rgba(140,170,215,.16);
+  --panel-a:rgba(40,56,84,.48); --panel-b:rgba(20,30,48,.30); --panel-brd:rgba(255,255,255,.12);
+  --nav-ink:#DCE4F0; --nav-div:#33445F;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9;
+  --q100:#184f95; --q250:#256abf; --q400:#3987e5; --q550:#6da7ec; --q700:#b7d3f6;
+  --none:#5d6880;
+  --good-bg:rgba(12,163,12,.16); --warn-bg:rgba(250,178,25,.14); --serious-bg:rgba(236,131,90,.16); --crit-bg:rgba(208,59,59,.20); --info-bg:rgba(57,135,229,.16); --none-bg:rgba(150,160,180,.10);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.25);
+  --plate-1:#0F1A2E; --plate-2:#0A1324; --plate-3:#060C18;
+  color-scheme:dark;
+}
+:root[lang="ar"]{ --font:"IBM Plex Sans Arabic","Inter",Tahoma,sans-serif }
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-synthesis:none;
+  -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;transition:background .3s}
+body.is-home{overflow:hidden;background:var(--frame)}
+button{font:inherit;color:inherit}
+a{color:inherit}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ================= HERO (design-unit system) ================= */
+.page{position:fixed;inset:0;background:var(--frame);display:none}
+body.is-home .page{display:block}
+body.is-home #app{display:none}
+.card{position:absolute;inset:0;isolation:isolate;overflow:hidden}
+.plate{position:absolute;inset:-2px;z-index:0;
+  background:
+   radial-gradient(120% 90% at 50% 40%, var(--plate-1) 0%, var(--plate-2) 55%, var(--plate-3) 100%)}
+.plate::after{content:"";position:absolute;inset:0;opacity:.5;
+  background:radial-gradient(60% 40% at 50% 100%, rgba(74,120,176,.10), transparent 70%)}
+.tint{position:absolute;inset:0;background:rgba(255,249,240,.05);z-index:1;pointer-events:none}
+:root[data-theme="dark"] .tint{background:rgba(10,20,40,.15)}
+
+/* glass orb — original replacement for the video plate */
+.stage{position:absolute;left:50%;top:47%;width:calc(560*var(--u));height:calc(560*var(--u));
+  transform:translate(-50%,-50%);z-index:0;pointer-events:none}
+.orb{position:absolute;inset:0;border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255,255,255,.98) 0 4%, rgba(255,255,255,.55) 9%, transparent 24%),
+    radial-gradient(circle at 72% 80%, rgba(150,185,230,.55), transparent 50%),
+    radial-gradient(circle at 50% 55%, rgba(236,242,250,.25) 0%, rgba(190,210,236,.55) 62%, rgba(255,255,255,.92) 99%);
+  box-shadow:inset 0 0 calc(70*var(--u)) rgba(255,255,255,.85),
+    inset calc(-34*var(--u)) calc(-44*var(--u)) calc(90*var(--u)) rgba(74,120,176,.28),
+    0 calc(50*var(--u)) calc(90*var(--u)) rgba(28,52,92,.13)}
+.orb::before{content:"";position:absolute;inset:6%;border-radius:50%;
+  background:conic-gradient(from 0deg, transparent 0 12%, rgba(255,255,255,.55) 16%, transparent 22% 48%, rgba(160,200,245,.45) 54%, transparent 60% 80%, rgba(255,255,255,.4) 86%, transparent 90%);
+  filter:blur(calc(14*var(--u)));mix-blend-mode:soft-light;animation:spin 28s linear infinite}
+.orb::after{content:"";position:absolute;inset:0;border-radius:50%;
+  box-shadow:inset 0 0 0 calc(1.2*var(--u)) rgba(255,255,255,.75), inset 0 calc(-10*var(--u)) calc(30*var(--u)) rgba(255,255,255,.6)}
+.blade{position:absolute;left:50%;top:50%;border-radius:calc(6*var(--u));
+  background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.6) 50%,rgba(255,255,255,.18));
+  border:calc(1*var(--u)) solid rgba(255,255,255,.7);
+  -webkit-backdrop-filter:blur(calc(6*var(--u))) saturate(120%);backdrop-filter:blur(calc(6*var(--u))) saturate(120%);
+  box-shadow:0 calc(10*var(--u)) calc(30*var(--u)) rgba(28,52,92,.08)}
+.blade.v{width:calc(22*var(--u));height:calc(720*var(--u));transform:translate(-50%,-50%) rotate(-14deg)}
+.blade.h{width:calc(620*var(--u));height:calc(22*var(--u));transform:translate(-50%,-50%) rotate(-14deg);opacity:.65}
+.floor{position:absolute;left:50%;top:100%;width:80%;height:calc(60*var(--u));transform:translate(-50%,-30%);
+  background:radial-gradient(closest-side,rgba(28,52,92,.16),transparent);filter:blur(calc(6*var(--u)))}
+:root[data-theme="dark"] .orb{
+  background:
+    radial-gradient(circle at 30% 26%, rgba(220,235,255,.75) 0 3%, rgba(160,195,240,.30) 9%, transparent 24%),
+    radial-gradient(circle at 72% 80%, rgba(57,135,229,.45), transparent 52%),
+    radial-gradient(circle at 50% 55%, rgba(30,50,85,.25) 0%, rgba(40,70,120,.45) 62%, rgba(150,190,240,.55) 99%);
+  box-shadow:inset 0 0 calc(70*var(--u)) rgba(120,170,235,.25), inset calc(-34*var(--u)) calc(-44*var(--u)) calc(90*var(--u)) rgba(57,135,229,.25), 0 0 calc(140*var(--u)) rgba(57,135,229,.18)}
+:root[data-theme="dark"] .orb::after{box-shadow:inset 0 0 0 calc(1.2*var(--u)) rgba(170,205,250,.35)}
+:root[data-theme="dark"] .blade{background:linear-gradient(90deg,rgba(150,190,240,.06),rgba(170,205,250,.25) 50%,rgba(150,190,240,.06));border-color:rgba(170,205,250,.25)}
+:root[data-theme="dark"] .floor{background:radial-gradient(closest-side,rgba(57,135,229,.18),transparent)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{50%{transform:translate(-50%,calc(-50% - 8*var(--u)))}}
+@media (prefers-reduced-motion:no-preference){ .stage{animation:float 11s ease-in-out infinite} }
+@media (prefers-reduced-motion:reduce){ .orb::before{animation:none} }
+
+/* absolute helper system — logical properties so RTL mirrors itself */
+.stack,.row,.hero-blk,.tagrow,.stats,.stat{display:contents}
+.l{position:absolute;z-index:2}
+.t{inset-inline-start:calc((var(--x) + 13)*var(--u));top:calc((var(--y) + 15)*var(--u))}
+.c{inset-inline-start:calc((var(--x) + 13)*var(--u));top:calc(50% + (var(--y) - 2)*var(--u))}
+.b{inset-inline-start:calc((var(--x) + 13)*var(--u));bottom:calc((var(--y) + 19)*var(--u))}
+.r{inset-inline-start:auto;inset-inline-end:calc((var(--x) + 19)*var(--u))}
+.sx{display:inline-block;transform-origin:left top;transform:scaleX(var(--sx,1))}
+[dir="rtl"] .sx{transform-origin:right top}
+[dir="rtl"] .flip{transform:scaleX(-1)}
+
+.brand{display:flex;align-items:center;text-decoration:none;color:inherit;height:calc(39*var(--u))}
+.mark{width:calc(39*var(--u));height:calc(39*var(--u));display:block;flex:none;color:var(--ink)}
+.brand b{font-size:calc(22*var(--u));font-weight:520;letter-spacing:-0.03em;line-height:1;margin-inline-start:calc(7.7*var(--u));white-space:nowrap}
+[lang="ar"] .brand b{letter-spacing:0;font-weight:600}
+
+.nav{position:absolute;left:50%;transform:translateX(calc(-50% - 3*var(--u)));top:calc((31 + 15)*var(--u));
+  width:calc(293*var(--u));height:calc(67*var(--u));border-radius:999px;background:var(--glass);
+  border:calc(1*var(--u)) solid var(--glass-brd);
+  -webkit-backdrop-filter:blur(calc(40*var(--u)));backdrop-filter:blur(calc(40*var(--u)));
+  box-shadow:0 0 0 calc(1.3*var(--u)) var(--glass-ring),0 calc(2*var(--u)) calc(10*var(--u)) rgba(28,52,92,.05);z-index:2;
+  display:flex;align-items:center;justify-content:center;gap:calc(14*var(--u))}
+.nav a{display:flex;align-items:center;gap:calc(10*var(--u));text-decoration:none;padding:calc(8*var(--u)) calc(4*var(--u))}
+.nav span{font-size:calc(15*var(--u));font-weight:570;letter-spacing:-0.04em;line-height:1;color:var(--nav-ink);white-space:nowrap}
+[lang="ar"] .nav span{letter-spacing:0;font-size:calc(16*var(--u))}
+.nav svg{width:calc(21*var(--u));height:calc(21*var(--u));display:block;flex:none}
+.nav hr{width:calc(1.5*var(--u));height:calc(31*var(--u));background:var(--nav-div);border:0;margin:0 calc(6*var(--u))}
+
+.cta{width:calc(236*var(--u));height:calc(70*var(--u));border-radius:999px;background:var(--cta);text-decoration:none;display:block;
+  box-shadow:0 calc(10*var(--u)) calc(24*var(--u)) rgba(11,26,50,.18)}
+.cta span{position:absolute;inset-inline-start:calc(32*var(--u));top:50%;transform:translateY(-50%);
+  font-size:calc(17.5*var(--u));font-weight:400;letter-spacing:-0.03em;line-height:1;color:var(--cta-ink);white-space:nowrap}
+[lang="ar"] .cta span{letter-spacing:0;font-weight:500}
+.knob{position:absolute;border-radius:50%;background:var(--cta-knob);display:flex;align-items:center;justify-content:center}
+.cta .knob{inset-inline-end:calc(10.5*var(--u));top:calc(10.5*var(--u));width:calc(49*var(--u));height:calc(49*var(--u))}
+.knob svg{width:calc(17*var(--u));height:calc(17*var(--u))}
+.knob{color:#fff}
+:root[data-theme="dark"] .cta .knob{color:#0B1424}
+
+.toggles{display:flex;gap:calc(8*var(--u))}
+.tg{width:calc(52*var(--u));height:calc(52*var(--u));border-radius:999px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;background:var(--glass);border:calc(1*var(--u)) solid var(--glass-brd);
+  -webkit-backdrop-filter:blur(calc(40*var(--u)));backdrop-filter:blur(calc(40*var(--u)));
+  box-shadow:0 0 0 calc(1.3*var(--u)) var(--glass-ring);color:var(--nav-ink);font-size:calc(15*var(--u));font-weight:600}
+.tg svg{width:calc(20*var(--u));height:calc(20*var(--u))}
+
+.eyebrow{font-size:calc(16*var(--u));font-weight:470;letter-spacing:-0.015em;line-height:1;color:var(--muted);white-space:nowrap}
+.hero h1{font-size:calc(92*var(--u));font-weight:360;letter-spacing:-0.035em;line-height:calc(90*var(--u));color:var(--ink);white-space:nowrap}
+[lang="ar"] .hero h1{letter-spacing:0;font-weight:400;font-size:calc(84*var(--u));line-height:calc(100*var(--u))}
+[lang="ar"] .eyebrow,[lang="ar"] .tag{letter-spacing:0}
+.play{width:calc(50.5*var(--u));height:calc(50.5*var(--u));border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 calc(6*var(--u)) calc(18*var(--u)) rgba(28,52,92,.10);text-decoration:none}
+.play svg{width:calc(13*var(--u));height:calc(14*var(--u))}
+.play path{fill:var(--ink)}
+.tag{font-size:calc(22*var(--u));font-weight:470;letter-spacing:-0.03em;line-height:1;color:var(--ink-soft);white-space:nowrap}
+
+.panel{width:calc(275*var(--u));height:calc(271*var(--u));border-radius:calc(28*var(--u));
+  background:linear-gradient(135deg,var(--panel-a),var(--panel-b));border:calc(1*var(--u)) solid var(--panel-brd);
+  -webkit-backdrop-filter:blur(calc(40*var(--u))) saturate(112%);backdrop-filter:blur(calc(40*var(--u))) saturate(112%);
+  box-shadow:inset calc(1*var(--u)) calc(1*var(--u)) 0 rgba(255,255,255,.35),0 calc(18*var(--u)) calc(40*var(--u)) rgba(28,52,92,.07);
+  text-decoration:none;color:inherit;display:block}
+.panel>*{position:absolute}
+.p-title{inset-inline-start:calc(29*var(--u));top:calc(44.7*var(--u));font-size:calc(24*var(--u));font-weight:500;letter-spacing:-0.02em;line-height:1;color:var(--ink);white-space:nowrap}
+.dot{inset-inline-start:calc(150*var(--u));top:calc(36*var(--u));width:calc(10*var(--u));height:calc(10*var(--u));border-radius:50%;background:var(--accent)}
+.shield{inset-inline-start:calc(177*var(--u));top:calc(46*var(--u));width:calc(73*var(--u));height:calc(73*var(--u));border-radius:50%;
+  background:var(--surface);display:flex;align-items:center;justify-content:center;opacity:.95;
+  box-shadow:0 0 calc(26*var(--u)) calc(10*var(--u)) rgba(255,255,255,.35),0 calc(6*var(--u)) calc(16*var(--u)) rgba(28,52,92,.06)}
+:root[data-theme="dark"] .shield{box-shadow:0 0 calc(26*var(--u)) calc(6*var(--u)) rgba(57,135,229,.18)}
+.shield svg{width:calc(32*var(--u));height:calc(36*var(--u))}
+.shield{color:var(--ink)}
+.p-sub{inset-inline-start:calc(29*var(--u));top:calc(94.35*var(--u));font-size:calc(17*var(--u));font-weight:400;letter-spacing:-0.02em;line-height:calc(21*var(--u));color:var(--muted2)}
+.scale{inset-inline-start:calc(46*var(--u));top:calc(189*var(--u));width:calc(190*var(--u));display:flex;justify-content:space-between;
+  font-size:calc(14*var(--u));letter-spacing:-0.03em;line-height:1;color:var(--muted)}
+.track{inset-inline-start:calc(46*var(--u));top:calc(221*var(--u));width:calc(190*var(--u));height:calc(8*var(--u));border-radius:999px;background:var(--track);overflow:hidden}
+.track i{display:block;width:var(--fill,50%);height:100%;border-radius:999px;background:var(--track-fill);transform-origin:left center}
+[dir="rtl"] .track i{transform-origin:right center}
+
+.num{font-size:calc(100*var(--u));font-weight:200;line-height:1;color:var(--ink);white-space:nowrap;font-family:"Inter",sans-serif;font-variant-numeric:tabular-nums}
+.lbl{font-size:calc(19*var(--u));font-weight:400;letter-spacing:-0.02em;line-height:calc(23.5*var(--u));color:var(--ink-2)}
+[lang="ar"] .lbl{letter-spacing:0}
+.slash{width:calc(23*var(--u));height:calc(75*var(--u));
+  background:linear-gradient(to top left,transparent calc(50% - .85*var(--u)),#A7B4C6 calc(50% - .85*var(--u)),#A7B4C6 calc(50% + .85*var(--u)),transparent calc(50% + .85*var(--u)))}
+.meet{width:calc(300*var(--u));height:calc(86*var(--u));border-radius:999px;display:block;text-decoration:none;background:var(--panel-b);
+  border:calc(1*var(--u)) solid var(--panel-brd);-webkit-backdrop-filter:blur(calc(40*var(--u)));backdrop-filter:blur(calc(40*var(--u)));
+  box-shadow:0 0 0 calc(1.2*var(--u)) rgba(120,145,180,.1),inset calc(1*var(--u)) calc(1*var(--u)) 0 rgba(255,255,255,.4),0 calc(8*var(--u)) calc(22*var(--u)) rgba(28,52,92,.035)}
+.meet>*{position:absolute}
+.thumb{inset-inline-start:calc(12*var(--u));top:calc(11*var(--u));width:calc(64*var(--u));height:calc(64*var(--u));border-radius:50%;overflow:hidden;
+  background:radial-gradient(circle at 32% 28%,#fff 0 6%,transparent 26%),radial-gradient(circle at 70% 78%,rgba(120,160,215,.6),transparent 55%),radial-gradient(circle,#e6eef9,#b9cde8);
+  box-shadow:inset 0 0 0 calc(1*var(--u)) rgba(255,255,255,.45)}
+.meet b{inset-inline-start:calc(89.8*var(--u));top:50%;transform:translateY(-50%);font-size:calc(17.5*var(--u));font-weight:425;letter-spacing:-0.04em;line-height:1;color:var(--ink-soft);white-space:nowrap}
+[lang="ar"] .meet b{letter-spacing:0;font-weight:500}
+.meet .knob{inset-inline-end:calc(18*var(--u));top:calc(17*var(--u));width:calc(50*var(--u));height:calc(50*var(--u));background:var(--meet-knob)}
+.burger{display:none}
+
+@media (prefers-reduced-motion:no-preference){
+  .cta,.meet,.panel,.play{transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+  .cta:hover,.meet:hover,.panel:hover,.play:hover{transform:translateY(calc(-2*var(--u)))}
+  .cta:hover span{transform:translateY(-50%)}
+}
+a:focus-visible,button:focus-visible{outline:2px solid #2f5f9e;outline-offset:3px}
+
+/* ---- compact tier ---- */
+@media (max-aspect-ratio: 87/80), (max-width: 899px), (max-height: 639px){
+  :root{--u: min(100vw / 880, 100vh / 1220); --pad: 52}
+  @supports (height:100dvh){:root{--u: min(100vw / 880, 100dvh / 1220)}}
+  .stack{display:flex;flex-direction:column;justify-content:space-between;position:absolute;inset:0;z-index:2;padding:calc(var(--pad)*var(--u))}
+  .row,.hero-blk,.stats,.stat,.tagrow{display:flex}
+  .row{align-items:center;justify-content:space-between;width:100%;gap:calc(14*var(--u))}
+  .hero-blk{flex-direction:column;align-items:flex-start;width:100%;margin:calc(30*var(--u)) 0}
+  .tagrow{align-items:center;gap:calc(16*var(--u));margin-top:calc(28*var(--u))}
+  .stats{align-items:flex-end;gap:calc(26*var(--u));flex-wrap:wrap}
+  .stat{align-items:flex-end;gap:calc(16*var(--u))}
+  .l,.t,.c,.b,.r{position:relative;inset:auto}
+  .hero h1{margin-top:calc(16*var(--u))}
+  .play{flex:none}
+  .panel{align-self:flex-end;margin-top:calc(36*var(--u))}
+  .row:last-child{flex-wrap:wrap;row-gap:calc(24*var(--u))}
+  .meet{margin-inline-start:auto}
+  .nav{position:relative;left:auto;top:auto;transform:none;flex:none}
+  .head-end{display:flex;align-items:center;gap:calc(12*var(--u))}
+  @media (min-aspect-ratio: 1/1){
+    :root{--u: min(100vw / 1240, 100vh / 820); --pad: 46}
+    @supports (height:100dvh){:root{--u: min(100vw / 1240, 100dvh / 820)}}
+    @media (max-height: 520px){
+      :root{--u: min(100vw / 900, 100vh / 560); --pad: 30}
+      @supports (height:100dvh){:root{--u: min(100vw / 900, 100dvh / 560)}}
+    }
+    .hero-blk{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:calc(46*var(--u));align-items:end;margin:calc(24*var(--u)) 0}
+    .eyebrow{grid-column:1;grid-row:1}
+    .hero h1{grid-column:1;grid-row:2}
+    .tagrow{grid-column:1;grid-row:3}
+    .panel{grid-column:2;grid-row:1 / span 3;align-self:center;margin-top:0}
+    .row:last-child{flex-wrap:nowrap}
+  }
+  @media (max-width: 640px) and (max-aspect-ratio: 1/1){
+    :root{--u: min(100vw / 600, 100vh / 940); --t: max(var(--u), min(0.85px, 100vh / 780)); --pad: 40}
+    @supports (height:100dvh){:root{--u: min(100vw / 600, 100dvh / 940); --t: max(var(--u), min(0.85px, 100dvh / 780))}}
+    .sx{transform:none}
+    .brand{height:auto}
+    .mark{width:calc(34*var(--t));height:calc(34*var(--t))}
+    .brand b{font-size:calc(19*var(--t));margin-inline-start:calc(8*var(--t))}
+    .hero h1{font-size:calc(64*var(--u));line-height:calc(66*var(--u));margin-top:calc(12*var(--u));white-space:normal}
+    .eyebrow{font-size:calc(15*var(--t));white-space:normal}
+    .tagrow{gap:calc(14*var(--t));margin-top:calc(22*var(--u))}
+    .tag{font-size:calc(17*var(--t));line-height:calc(23*var(--t));white-space:normal}
+    .play{width:calc(48*var(--t));height:calc(48*var(--t))}
+    .panel{width:100%;align-self:stretch;height:calc(212*var(--t));margin-top:calc(24*var(--u))}
+    .p-title{inset-inline-start:calc(30*var(--t));top:calc(30*var(--t));font-size:calc(22*var(--t))}
+    .dot{inset-inline-start:calc(150*var(--t));top:calc(28*var(--t));width:calc(10*var(--t));height:calc(10*var(--t))}
+    .shield{inset-inline-start:auto;inset-inline-end:calc(26*var(--t));top:calc(22*var(--t));width:calc(64*var(--t));height:calc(64*var(--t))}
+    .shield svg{width:calc(28*var(--t));height:calc(32*var(--t))}
+    .p-sub{inset-inline-start:calc(31*var(--t));top:calc(72*var(--t));font-size:calc(15*var(--t));line-height:calc(19*var(--t))}
+    .scale{inset-inline-start:calc(31*var(--t));top:calc(150*var(--t));width:calc(100% - 62*var(--t));font-size:calc(13*var(--t))}
+    .track{inset-inline-start:calc(31*var(--t));top:calc(178*var(--t));width:calc(100% - 62*var(--t));height:calc(8*var(--t))}
+    .stats{gap:calc(18*var(--u));align-items:center;flex-wrap:nowrap}
+    .stat{flex-direction:column;align-items:flex-start;gap:calc(6*var(--t))}
+    .num{font-size:calc(76*var(--u))}
+    .lbl{font-size:calc(14*var(--t));line-height:calc(18*var(--t))}
+    .slash{height:calc(92*var(--t));width:calc(29*var(--t));align-self:center}
+    .meet{width:100%;height:calc(72*var(--t))}
+    .thumb{inset-inline-start:calc(9*var(--t));top:calc(5*var(--t));width:calc(62*var(--t));height:calc(62*var(--t))}
+    .meet b{inset-inline-start:calc(84*var(--t));font-size:calc(17*var(--t))}
+    .meet .knob{inset-inline-start:auto;inset-inline-end:calc(11*var(--t));top:calc(11*var(--t));width:calc(50*var(--t));height:calc(50*var(--t))}
+    .tg{width:calc(46*var(--t));height:calc(46*var(--t));font-size:calc(14*var(--t))}
+    .tg svg{width:calc(18*var(--t));height:calc(18*var(--t))}
+    .stage{width:calc(520*var(--u));height:calc(520*var(--u));top:40%}
+  }
+}
+/* nav collapse — portrait */
+.menu{display:contents}
+.burger{align-items:center;justify-content:center;flex-direction:column;gap:calc(6*var(--t));width:calc(52*var(--t));height:calc(52*var(--t));
+  border-radius:999px;padding:0;cursor:pointer;background:var(--glass);border:1px solid var(--glass-brd);
+  -webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);box-shadow:0 0 0 1px var(--glass-ring)}
+.burger i{display:block;width:calc(20*var(--t));height:calc(1.8*var(--t));border-radius:999px;background:var(--nav-ink);transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+.burger[aria-expanded="true"] i:first-child{transform:translateY(calc(3.9*var(--t))) rotate(45deg)}
+.burger[aria-expanded="true"] i:last-child{transform:translateY(calc(-3.9*var(--t))) rotate(-45deg)}
+@media (max-aspect-ratio: 1/1){
+  .burger{display:flex}
+  .menu{display:block;position:absolute;z-index:9;top:calc(var(--pad)*var(--u) + 68*var(--t));inset-inline-end:calc(var(--pad)*var(--u));
+    width:calc(320*var(--t));padding:calc(14*var(--t));border-radius:calc(28*var(--t));background:var(--glass);border:1px solid var(--glass-brd);
+    -webkit-backdrop-filter:blur(40px);backdrop-filter:blur(40px);box-shadow:0 0 0 1px var(--glass-ring),0 16px 34px rgba(28,52,92,.12);
+    opacity:0;visibility:hidden;transform:translateY(-10px) scale(.97);transform-origin:top right;transition:opacity .26s,transform .26s,visibility .26s}
+  [dir="rtl"] .menu{transform-origin:top left}
+  .menu[data-open]{opacity:1;visibility:visible;transform:none}
+  .menu .nav{position:relative;left:auto;top:auto;transform:none;width:100%;height:auto;display:flex;flex-direction:column;align-items:stretch;gap:calc(4*var(--t));
+    padding:calc(4*var(--t));border:0;background:none;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .menu .nav a{padding:calc(10*var(--t))}
+  .menu .nav span{font-size:calc(17*var(--t))}
+  .menu .nav svg{width:calc(21*var(--t));height:calc(21*var(--t))}
+  .menu .nav hr{width:100%;height:1px;margin:calc(4*var(--t)) 0}
+  .menu .cta{position:relative;inset:auto;width:100%;height:calc(60*var(--t));margin-top:calc(10*var(--t))}
+  .menu .cta span{inset-inline-start:calc(26*var(--t));font-size:calc(17*var(--t))}
+  .menu .cta .knob{inset-inline-start:auto;inset-inline-end:calc(7*var(--t));top:calc(6*var(--t));width:calc(48*var(--t));height:calc(48*var(--t))}
+  .menu .cta .knob svg{width:calc(16*var(--t));height:calc(16*var(--t))}
+}
+
+/* entrance pre-states */
+html.pre .brand,html.pre .nav,html.pre .cta,html.pre .toggles,html.pre .burger,html.pre .eyebrow,html.pre .play,html.pre .tag,html.pre .panel,html.pre .lbl,html.pre .meet,html.pre .stage{opacity:0}
+html.pre .hero h1 .sx,html.pre .num{clip-path:inset(100% 0 -14% 0)}
+html.pre .slash{scale:1 0}
+html.pre .track i{scale:0 1}
+html.pre .dot{scale:0}
+
+/* ================= APP SHELL ================= */
+#app{min-height:100%;display:flex;flex-direction:column}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);border-bottom:1px solid var(--line)}
+.top-in{max-width:1320px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:18px}
+.top .brand{height:auto;flex:none}
+.top .mark{width:30px;height:30px}
+.top .brand b{font-size:17px;margin-inline-start:9px}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;padding:2px;margin:0 auto}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{white-space:nowrap;text-decoration:none;font-size:14px;font-weight:500;color:var(--muted);padding:8px 12px;border-radius:999px;transition:background .2s,color .2s}
+.tabs a:hover{color:var(--ink);background:var(--surface-2)}
+.tabs a[aria-current="page"]{color:var(--ink);background:var(--surface);box-shadow:0 0 0 1px var(--line),var(--shadow)}
+.top .toggles{gap:6px;flex:none}
+.top .tg{width:38px;height:38px;font-size:13px;border-width:1px;box-shadow:0 0 0 1px var(--line);background:var(--surface)}
+.top .tg svg{width:17px;height:17px}
+
+main{flex:1;max-width:1320px;width:100%;margin:0 auto;padding:28px 24px 64px}
+.view-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:8px 0 22px}
+.view-head h2{font-size:34px;font-weight:400;letter-spacing:-.03em;line-height:1.1}
+[lang="ar"] .view-head h2{letter-spacing:0;font-weight:500}
+.view-head p{color:var(--muted);font-size:15px;max-width:640px;margin-top:8px;line-height:1.55}
+.eyebrow-s{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+[lang="ar"] .eyebrow-s{letter-spacing:0}
+
+.grid{display:grid;gap:16px}
+.g-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+.span-4{grid-column:span 4}.span-5{grid-column:span 5}.span-6{grid-column:span 6}.span-7{grid-column:span 7}.span-8{grid-column:span 8}.span-12{grid-column:span 12}
+@media (max-width:1000px){.g-4{grid-template-columns:repeat(2,minmax(0,1fr))}.g-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .span-4,.span-5,.span-6,.span-7,.span-8{grid-column:span 12}}
+@media (max-width:620px){.g-3,.g-2{grid-template-columns:minmax(0,1fr)} .g-4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kpi .k-v{font-size:30px} .box{padding:16px;border-radius:18px} main{padding:20px 14px 56px}
+  .top-in{padding:10px 14px;gap:10px;flex-wrap:wrap} .top .tabs{order:3;flex-basis:100%;margin:0 -4px} .top .toggles{margin-inline-start:auto}
+  .view-head h2{font-size:27px} .bar-row{grid-template-columns:minmax(90px,120px) 1fr 44px;font-size:12.5px}}
+
+.box{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);min-width:0}
+.box h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.box .sub{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.45}
+.box-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.src{font-size:11.5px;color:var(--muted);margin-top:14px;padding-top:10px;border-top:1px dashed var(--line)}
+
+.kpi{display:flex;flex-direction:column;gap:6px}
+.kpi .k-l{font-size:13px;color:var(--muted);font-weight:500}
+.kpi .k-v{font-size:40px;font-weight:300;letter-spacing:-.03em;line-height:1;font-family:"Inter",sans-serif;font-variant-numeric:tabular-nums}
+.kpi .k-s{font-size:12.5px;color:var(--muted)}
+.kpi .k-s b{color:var(--ink-2);font-weight:600}
+
+/* bar chart (HTML) */
+.bars{display:flex;flex-direction:column;gap:7px}
+.bar-row{display:grid;grid-template-columns:minmax(110px,190px) 1fr 52px;align-items:center;gap:10px;font-size:13px;border-radius:8px;padding:2px 4px;margin:0 -4px}
+.bar-row:hover{background:var(--surface-2)}
+.bar-row .bl{color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-row .bv{text-align:end;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.bar-track{height:14px;display:flex;gap:2px;align-items:center}
+.seg{height:14px;border-radius:2px;min-width:2px;transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.seg:last-child{border-start-end-radius:4px;border-end-end-radius:4px}
+.bar-row.clickable{cursor:pointer}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.legend i.ring{background:transparent!important;border:2px solid var(--muted)}
+
+.dumb{position:relative;height:18px}
+.dumb .ln{position:absolute;top:8px;height:2px;background:var(--line-2);border-radius:2px}
+.dumb .pt{position:absolute;top:3px;width:12px;height:12px;border-radius:50%;margin-inline-start:-6px;box-shadow:0 0 0 2px var(--surface)}
+
+/* chips & status */
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:3px 9px 3px 7px;border-radius:999px;white-space:nowrap;line-height:1.4}
+.chip svg{width:12px;height:12px;flex:none}
+.st-good{background:var(--good-bg);color:var(--ink)} .st-good svg{color:var(--good)}
+.st-warn{background:var(--warn-bg);color:var(--ink)} .st-warn svg{color:#c98500}
+.st-serious{background:var(--serious-bg);color:var(--ink)} .st-serious svg{color:var(--serious)}
+.st-crit{background:var(--crit-bg);color:var(--ink)} .st-crit svg{color:var(--crit)}
+.st-info{background:var(--info-bg);color:var(--ink)} .st-info svg{color:var(--info)}
+.st-none{background:var(--none-bg);color:var(--muted)} .st-none svg{color:var(--none)}
+.badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px}
+.input,.select{height:40px;border-radius:12px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);padding:0 12px;font:inherit;font-size:14px;min-width:0}
+.input:focus,.select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.seg-ctl{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}
+.seg-ctl button{border:0;background:none;padding:7px 12px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted)}
+.seg-ctl button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line),0 1px 3px rgba(0,0,0,.06)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);cursor:pointer;font-size:14px;font-weight:500;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--cta);color:var(--cta-ink);border-color:transparent}
+.btn svg{width:15px;height:15px}
+.count{font-size:13px;color:var(--muted);margin-inline-start:auto}
+
+/* institution cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.icard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;text-align:start;display:flex;flex-direction:column;gap:12px;
+  transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s,border-color .25s;box-shadow:var(--shadow)}
+.icard:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.icard h4{font-size:15px;font-weight:600;line-height:1.3}
+.icard .meta{font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:center;margin-top:4px}
+.domains{display:flex;gap:6px;flex-wrap:wrap}
+.dm{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted);padding:3px 8px;border-radius:8px;background:var(--surface-2)}
+.dm i{width:7px;height:7px;border-radius:50%}
+.mini{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;border-top:1px solid var(--line);padding-top:10px}
+.mini div{font-size:11.5px;color:var(--muted)}
+.mini b{display:block;font-size:18px;font-weight:400;color:var(--ink);font-family:"Inter",sans-serif}
+
+/* table */
+.tbl-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:10px 12px;text-align:start;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:12px;font-weight:600;color:var(--muted);background:var(--surface-2);position:sticky;top:0;z-index:1}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover{color:var(--ink)}
+td.num-c,th.num-c{text-align:end;font-variant-numeric:tabular-nums}
+tr.grp td{background:var(--surface-2);font-weight:600;font-size:12.5px;color:var(--ink-2)}
+tbody tr.rowlink{cursor:pointer}
+tbody tr.rowlink:hover td{background:var(--surface-2)}
+
+/* map */
+.map svg{width:100%;height:auto;display:block}
+.map .bub{cursor:pointer;transition:opacity .2s}
+.map .bub:hover circle.c{stroke-width:3}
+.map text{font-family:var(--font)}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:50;display:none}
+.modal[open]{display:block}
+.modal .scrim{position:absolute;inset:0;background:rgba(5,10,20,.45);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.sheet{position:absolute;top:0;bottom:0;inset-inline-end:0;width:min(720px,100%);background:var(--bg);border-inline-start:1px solid var(--line);
+  overflow:auto;padding:26px;box-shadow:-20px 0 60px rgba(0,0,0,.18);animation:slidein .35s cubic-bezier(.2,.7,.3,1)}
+[dir="rtl"] .sheet{animation-name:slidein-r}
+@keyframes slidein{from{transform:translateX(40px);opacity:0}}
+@keyframes slidein-r{from{transform:translateX(-40px);opacity:0}}
+.sheet .close{position:sticky;top:0;float:inline-end;width:38px;height:38px;border-radius:50%;border:1px solid var(--line-2);background:var(--surface);cursor:pointer;z-index:2}
+.sheet h2{font-size:28px;font-weight:400;letter-spacing:-.02em;margin:4px 0 6px}
+.dtabs{display:flex;gap:4px;overflow-x:auto;margin:18px 0;border-bottom:1px solid var(--line)}
+.dtabs button{border:0;background:none;padding:10px 12px;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.dtabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kv div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kv span{display:block;font-size:12px;color:var(--muted)}
+.kv b{display:block;font-size:20px;font-weight:400;margin-top:4px}
+.empty{border:1px dashed var(--line-2);border-radius:16px;padding:22px;text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
+.empty .btn{margin-top:12px}
+
+/* audits */
+.acard{display:flex;flex-direction:column;gap:10px;text-decoration:none}
+.acard .ic{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--surface-2);border:1px solid var(--line)}
+.acard .ic svg{width:22px;height:22px;color:var(--accent)}
+.acard h3{margin-top:4px}
+.acard p{font-size:13px;color:var(--muted);line-height:1.5;flex:1}
+.acard .go{font-size:13px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:6px}
+.ck-sec{margin-top:18px}
+.ck-sec h4{font-size:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.ck-item{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.ck-item .id{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12px}
+.rate{display:inline-flex;gap:3px}
+.rate button{border:1px solid var(--line-2);background:var(--surface);min-width:40px;height:30px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted)}
+.rate button[aria-pressed="true"][data-v="M"]{background:var(--good);color:#fff;border-color:transparent}
+.rate button[aria-pressed="true"][data-v="PM"]{background:var(--warn);color:#2a1d00;border-color:transparent}
+.rate button[aria-pressed="true"][data-v="NM"]{background:var(--crit);color:#fff;border-color:transparent}
+.rate button[aria-pressed="true"][data-v="NA"]{background:var(--none);color:#fff;border-color:transparent}
+@media (max-width:620px){.ck-item{grid-template-columns:40px 1fr}.ck-item .rate{grid-column:1 / -1}}
+.score-ring{display:flex;align-items:center;gap:16px}
+.score-ring > svg{width:92px;height:92px;flex:none}
+.pbar{height:8px;background:var(--track);border-radius:999px;overflow:hidden;display:flex}
+.pbar i{display:block;height:100%}
+textarea.input{height:auto;padding:10px 12px;resize:vertical;width:100%}
+
+.tip{position:fixed;z-index:80;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);border-radius:12px;padding:9px 12px;
+  font-size:12.5px;line-height:1.45;box-shadow:0 10px 30px rgba(0,0,0,.15);max-width:280px;opacity:0;transition:opacity .12s}
+.tip.on{opacity:1}
+.tip b{font-weight:600}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--cta);color:var(--cta-ink);padding:10px 18px;border-radius:999px;font-size:13.5px;z-index:90;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+footer .in{max-width:1320px;margin:0 auto;padding:18px 24px;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.note{font-size:13px;color:var(--ink-2);background:var(--info-bg);border-radius:14px;padding:12px 14px;line-height:1.55;display:flex;gap:10px}
+.note svg{flex:none;width:18px;height:18px;color:var(--info);margin-top:1px}
+.fade-in{animation:fade .4s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+@media (prefers-reduced-motion:reduce){.fade-in,.sheet{animation:none}}
+
+/* ===== background video plate ===== */
+.bg{position:absolute;left:-2px;top:-2px;width:calc(100vw + 4px);height:calc(100vh + 4px);object-fit:cover;object-position:50% 50%;
+  z-index:0;filter:brightness(1.006) saturate(.965);transform:scale(1.002);opacity:0;transition:opacity .6s}
+@supports (height:100dvh){.bg{height:calc(100dvh + 4px)}}
+.has-video .bg{opacity:1}
+.has-video .plate,.has-video .stage{display:none}
+/* dark theme: re-tone the pale studio plate to deep navy, keeping its hues */
+:root[data-theme="dark"] .bg{filter:invert(1) hue-rotate(180deg) brightness(.62) saturate(.9) contrast(1.05)}
+:root[data-theme="dark"] .has-video .tint{background:rgba(8,16,32,.22)}
+</style>
+<script>
+(function(){var d=document.documentElement;
+  try{var th=localStorage.getItem('dha-theme');var lg=localStorage.getItem('dha-lang');
+    if(!th&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)th='dark';
+    if(th)d.setAttribute('data-theme',th);
+    if(lg==='ar'){d.lang='ar';d.dir='rtl'}}catch(e){}
+  var h=(location.hash||'').replace('#','');
+  if(h&&h!=='home')return;
+  if(!('animate' in Element.prototype))return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  d.classList.add('pre');
+  setTimeout(function(){d.classList.remove('pre')},4000);
+})();
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-mark" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="18.4" stroke="currentColor" stroke-width="1.1"/>
+      <clipPath id="gclip"><circle cx="20" cy="20" r="18.2"/></clipPath>
+      <g clip-path="url(#gclip)" stroke="currentColor" stroke-linecap="round">
+        <path d="M6 10.5c4-2 9-2.4 14-.6s10 1.4 14-.6" stroke-width="2"/>
+        <path d="M2.5 15.6c5-2.3 11-2.6 17.5-.6 6.5 2 12 1.6 17.5-.6" stroke-width="2.6"/>
+        <path d="M2.5 25c5-2.3 11-2.6 17.5-.6 6.5 2 12 1.6 17.5-.6" stroke-width="2.6"/>
+        <path d="M6 30.5c4-2 9-2.4 14-.6s10 1.4 14-.6" stroke-width="2"/>
+      </g>
+      <rect x="17.6" y="11" width="4.8" height="18" rx="1.4" fill="currentColor"/>
+      <rect x="11" y="17.6" width="18" height="4.8" rx="1.4" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-chev" viewBox="0 0 18 18" fill="none"><path d="m6.6 3.6 6 5.4-6 5.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10" cy="10" r="3.6"/><path d="M10 1.8v1.8M10 16.4v1.8M1.8 10h1.8M16.4 10h1.8M4.2 4.2l1.3 1.3M14.5 14.5l1.3 1.3M4.2 15.8l1.3-1.3M14.5 5.5l1.3-1.3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M16.8 12.4A7 7 0 0 1 7.6 3.2a7 7 0 1 0 9.2 9.2z"/></symbol>
+    <symbol id="i-home" viewBox="0 0 20 21" fill="none"><path d="M2 8.4 10 2l8 6.4V18a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="1" y="1" width="7.4" height="7.4" rx="1.7"/><rect x="11.6" y="1" width="7.4" height="7.4" rx="1.7"/><rect x="1" y="11.6" width="7.4" height="7.4" rx="1.7"/><rect x="11.6" y="11.6" width="7.4" height="7.4" rx="1.7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5.2" fill="currentColor" stroke="none"/><path d="m3.6 6.1 1.7 1.6 3.2-3.3" stroke="#fff" stroke-width="1.5"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 12 12"><path d="M6 .9 11.4 10.6H.6z" fill="currentColor"/><path d="M6 4.4v2.8M6 8.6v.1" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5.2" fill="currentColor"/><path d="m4 4 4 4M8 4 4 8" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5.2" fill="currentColor"/><path d="M6 5.4v3M6 3.6v.1" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-dash" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3.8 6h4.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5.2" fill="currentColor"/><path d="M6 3.6v4.8M3.6 6h4.8" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2.5h4.5V7M13.5 2.5 7 9M11.5 9.5v3a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 30 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2h8M12.5 2v10L3.2 28.4A2.4 2.4 0 0 0 5.3 32h19.4a2.4 2.4 0 0 0 2.1-3.6L17.5 12V2"/><path d="M7.4 21.2c3.4-1.6 6.4-1.4 9 0s5.4 1.5 7.6.2"/></symbol>
+    <symbol id="i-steth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v5a5 5 0 0 0 10 0V3M10 13v2a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="11" r="2"/></symbol>
+    <symbol id="i-tooth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 3c-2.5 0-4 2-4 4.5 0 3 1.5 4.5 2 7.5.4 2.6.8 6 2.5 6s1.7-4.5 4.5-4.5 2.8 4.5 4.5 4.5 2.1-3.4 2.5-6c.5-3 2-4.5 2-7.5C21 5 19.5 3 17 3c-2 0-3 1-5 1S9 3 7 3z"/></symbol>
+    <symbol id="i-lab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3M7.5 15h9"/></symbol>
+    <symbol id="i-rad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M12 7v10M9 9.5c1 .6 5 .6 6 0M8.5 12.5c1.2.7 5.8.7 7 0M9 15.5c1 .5 5 .5 6 0"/></symbol>
+    <symbol id="i-mind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M8.5 11h2l1-2 1.5 4 1-2h1.5"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============== LANDING (hero) ============== -->
+<div class="page hero" id="hero">
+  <div class="card" id="herocard">
+    <div class="plate" aria-hidden="true"></div>
+    <video class="bg" id="bgv" autoplay muted loop playsinline preload="auto" disablepictureinpicture
+       aria-hidden="true"
+       poster="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260912_105822_bf7c2d53-9957-4521-bbbf-7c1ab7a70130.png"
+       src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260912_105953_21ad8049-9088-4a00-bad3-aee6b5575a2b.mp4"></video>
+    <div class="stage" aria-hidden="true"><div class="blade v"></div><div class="orb"></div><div class="blade h"></div><div class="floor"></div></div>
+    <div class="tint"></div>
+    <div class="stack">
+      <div class="row">
+        <a class="brand l t" style="--x:68;--y:47" href="#home"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><b class="sx" style="--sx:0.94" data-i="brand"></b></a>
+        <div class="head-end">
+          <div class="toggles l t r" style="--x:316;--y:39">
+            <button class="tg js-lang" type="button" aria-label="Switch language"><span data-i="langBtn"></span></button>
+            <button class="tg js-theme" type="button" aria-label="Toggle light / dark"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+          </div>
+          <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-menu"><i></i><i></i></button>
+          <div class="menu" id="site-menu">
+            <nav class="nav" aria-label="Primary">
+              <a href="#institutions"><svg aria-hidden="true"><use href="#i-home"/></svg><span data-i="navExplore"></span></a>
+              <hr>
+              <a href="#audits"><svg aria-hidden="true"><use href="#i-grid"/></svg><span data-i="navAudits"></span></a>
+            </nav>
+            <a class="cta l t r" style="--x:58;--y:30" href="#overview"><span data-i="ctaOpen"></span><i class="knob"><svg class="flip" aria-hidden="true"><use href="#i-chev"/></svg></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-blk">
+        <p class="eyebrow l c sx" style="--x:65.7;--y:-209.2;--sx:0.95" data-i="heroEyebrow"></p>
+        <h1 class="l c" style="--x:62.6;--y:-167.3"><span class="sx" style="--sx:0.96" data-i="heroH1a"></span><br><span class="sx" style="--sx:0.98" data-i="heroH1b"></span></h1>
+        <div class="tagrow">
+          <a class="play l c" style="--x:66;--y:34" href="#overview" aria-label="Open overview"><svg viewBox="0 0 13 14" class="flip" aria-hidden="true"><path d="M1.4 1.3 11.6 7 1.4 12.7z"/></svg></a>
+          <span class="tag l c sx" style="--x:131;--y:48.7;--sx:0.92" data-i="heroTag"></span>
+        </div>
+        <a class="panel l c r" style="--x:58;--y:-165" href="#lab" aria-label="Laboratory coverage">
+          <span class="p-title" data-i="panelTitle"></span>
+          <span class="dot"></span>
+          <span class="shield"><svg viewBox="0 0 30 34" aria-hidden="true"><use href="#i-flask"/></svg></span>
+          <p class="p-sub" data-i="panelSub"></p>
+          <span class="scale"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></span>
+          <span class="track"><i id="heroTrack"></i></span>
+        </a>
+      </div>
+      <div class="row">
+        <div class="stats">
+          <div class="stat">
+            <span class="num l b sx" style="--x:64;--y:60.4" id="heroN1">43</span>
+            <span class="lbl l b sx" style="--x:250;--y:73.2" data-i="heroL1"></span>
+          </div>
+          <span class="slash l b" style="--x:418;--y:76"></span>
+          <div class="stat">
+            <span class="num l b sx" style="--x:480;--y:60.4" id="heroN2">64</span>
+            <span class="lbl l b sx" style="--x:650;--y:73.2" data-i="heroL2"></span>
+          </div>
+        </div>
+        <a class="meet l b r" style="--x:59;--y:66" href="#gaps"><span class="thumb"></span><b data-i="meetLbl"></b><i class="knob"><svg class="flip" aria-hidden="true"><use href="#i-chev"/></svg></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== PLATFORM ============== -->
+<div id="app">
+  <header class="top">
+    <div class="top-in">
+      <a class="brand" href="#home"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg><b data-i="brand"></b></a>
+      <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+      <div class="toggles">
+        <button class="tg js-lang" type="button" aria-label="Switch language"><span data-i="langBtn"></span></button>
+        <button class="tg js-theme" type="button" aria-label="Toggle light / dark"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+    </div>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <footer><div class="in"><span data-i="footL"></span><a href="#data" data-i="footR"></a></div></footer>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title"><div class="scrim" data-close></div><div class="sheet" id="sheet"></div></div>
+<div class="tip" id="tip" role="tooltip"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>/* =====================================================================
+   DATA — compiled from the Directorate's uploaded files.
+   De-identified: no staff names, staff IDs, phone numbers or contacts.
+   Workforce qualifications are kept only as a governorate-level total.
+   Sources:
+   S1  Geographic list (Wilayat, Institution) — provided in brief
+   S2  Laboratory staff per institution — provided in brief
+   S3  Radiographers current + 3-phase need, Aug 2025 (xlsx)
+   S4  Radiographers actual + need, Feb 2026 (xlsx)
+   S5  Comprehensive Radiology Data Template — Dhofar (xlsx)
+   ===================================================================== */
+
+const WILAYAT = {
+  "Salalah":     { ar: "صلالة",   x: 54.09, y: 17.02 },
+  "Taqah":       { ar: "طاقة",    x: 54.40, y: 17.04 },
+  "Mirbat":      { ar: "مرباط",   x: 54.69, y: 16.99 },
+  "Sadah":       { ar: "سدح",     x: 55.07, y: 17.05 },
+  "Shalim":      { ar: "شليم وجزر الحلانيات", x: 55.55, y: 18.05 },
+  "Thumrayt":    { ar: "ثمريت",   x: 54.03, y: 17.67 },
+  "Muqshin":     { ar: "مقشن",    x: 54.85, y: 19.50 },
+  "Al Mazyunah": { ar: "المزيونة", x: 52.65, y: 17.85 },
+  "Dhalqut":     { ar: "ضلكوت",   x: 53.25, y: 16.70 },
+  "Rakhyut":     { ar: "رخيوت",   x: 53.42, y: 16.74 }
+};
+
+/* lab: n = staff count (S2) | "visit" = part-time visiting service (2 days) | "plan" = new service planned | null = not listed
+   r25: [current, phase1, phase2, phase3, target]  (S3, Aug 2025)
+   r26: [actual, additional need, noteKey]         (S4, Feb 2026)            */
+const INST = [
+ ["andat","Andat HC","مركز أندات الصحي","Al Mazyunah","HC","plan",[0,1,0,1,2],null],
+ ["matoura","Matoura & Jijwal HC","مركز مطورة وجيجوال الصحي","Al Mazyunah","HC",null,[0,0,0,0,0],null],
+ ["tosinat","Tosinat HC","مركز توسنات الصحي","Al Mazyunah","HC",null,[0,0,0,0,0],null],
+ ["mitn","Mitn HC","مركز ميتان الصحي","Al Mazyunah","HC",null,[0,0,0,0,0],null],
+ ["harwib","Harwib HC","مركز هرويب الصحي","Al Mazyunah","HC",1,[0,1,1,1,3],[0,2,"approved"]],
+ ["mazyunah","Al Mazyunah Hospital","مستشفى المزيونة","Al Mazyunah","H",9,null,[7,0]],
+ ["khadrafi","Khadrafi HC","مركز خضرفي الصحي","Dhalqut","HC",null,[0,0,0,0,0],null],
+ ["dalkut","Dalkut HC","مركز ضلكوت الصحي","Dhalqut","HC",2,[1,3,0,3,7],[1,2]],
+ ["mirbat","Mirbat Hospital","مستشفى مرباط","Mirbat","H",5,[3,3,1,1,8],[3,3]],
+ ["tawi","Tawi Atayr Hospital","مستشفى طوي أعتير","Mirbat","H",2,[2,0,0,0,2],[2,0]],
+ ["muqshin","Muqshin HC","مركز مقشن الصحي","Muqshin","HC",2,[1,3,2,2,7],[1,3]],
+ ["mashash","Al Mashash HC","مركز المشاش الصحي","Muqshin","HC",null,[0,0,0,0,0],null],
+ ["marsodad","Marsodad HC","مركز مرسودد الصحي","Muqshin","HC",null,[0,0,0,0,0],null],
+ ["rakhyut","Rakhyut Hospital","مستشفى رخيوت","Rakhyut","H",1,[1,0,1,1,3],[1,0]],
+ ["shahb","Shahb Asayb HC","مركز شهب أصعيب الصحي","Rakhyut","HC",4,[3,2,2,1,8],[3,2]],
+ ["hasik","Hasik HC","مركز حاسك الصحي","Sadah","HC",1,[0,1,0,1,2],null],
+ ["hadbin","Hadbin HC","مركز حدبين الصحي","Sadah","HC","visit",[0,0,0,0,0],null],
+ ["sadah","Sadah Hospital","مستشفى سدح","Sadah","H",3,[2,3,2,1,8],[2,3]],
+ ["sawb","Sawb HC","مركز صوب الصحي","Sadah","HC","visit",[0,0,0,0,0],null],
+ ["hijayf","Hijayf HC","مركز حجيف الصحي","Salalah","HC",null,[0,0,0,0,0],null],
+ ["qayrun","Qayrun Hayriti HC","مركز قيرون حيرتي الصحي","Salalah","HC",1,[0,0,1,2,3],null],
+ ["jadidah","Salalah Al Jadidah HC","مركز صلالة الجديدة الصحي","Salalah","HC",2,[1,1,1,1,4],[1,1]],
+ ["awqad","Awqad HC","مركز عوقد الصحي","Salalah","HC",3,[1,1,1,1,4],[1,2]],
+ ["dahareez","Al Dahareez HC","مركز الدهاريز الصحي","Salalah","HC",2,[1,1,1,1,4],[1,1]],
+ ["gharbia","Salalah Al Gharbia HC","مركز صلالة الغربية الصحي","Salalah","HC",2,[2,0,1,1,4],[2,0]],
+ ["taitam","Taitam HC","مركز طيطام الصحي","Salalah","HC","plan",[0,0,0,0,0],null],
+ ["saadah","As Saadah HC","مركز السعادة الصحي","Salalah","HC",5,[2,2,1,2,7],[1,3]],
+ ["shuwaymiyah","A' Shuwaymiyah HC","مركز الشويمية الصحي","Shalim","HC",1,[1,0,0,1,2],[1,0]],
+ ["sharbthat","Sharbthat HC","مركز شربثات الصحي","Shalim","HC",1,[0,0,0,1,1],null],
+ ["kubut","Kubut HC","مركز كوبوت الصحي","Shalim","HC",1,[0,1,0,1,2],[0,1,"upcoming"]],
+ ["dimit","Dimit HC","مركز ديميت الصحي","Shalim","HC",1,[0,0,0,0,0],null],
+ ["shalim","Shalim Hospital","مستشفى شليم","Shalim","H",4,[2,3,2,1,8],[2,4]],
+ ["hallaniyat","Al Hallaniyat HC","مركز الحلانيات الصحي","Shalim","HC",1,[0,1,0,1,2],[0,2,"ready"]],
+ ["jibjat","Jibjat HC","مركز جبجات الصحي","Taqah","HC",null,[0,0,0,0,0],null],
+ ["taqah","Taqah Hospital","مستشفى طاقة","Taqah","H",5,[4,2,1,1,8],[4,2]],
+ ["madinat","Madinat Al Haqq Hospital","مستشفى مدينة الحق","Taqah","H",1,[1,0,0,1,2],[1,0]],
+ ["mudayy","Mudayy HC","مركز مضي الصحي","Thumrayt","HC","plan",[0,2,1,1,4],[0,2,"newproject"]],
+ ["thumrayt","Thumrayt Hospital","مستشفى ثمريت","Thumrayt","H",4,[3,2,1,2,7],[3,3]],
+ ["aiboot","Aiboot '2' HC","مركز عيبوت 2 الصحي","Thumrayt","HC",null,[0,0,0,0,0],null],
+ ["burbazoom","Burbazoom HC","مركز بربزوم الصحي","Thumrayt","HC",null,[0,0,0,0,0],null],
+ ["hashman","Al Hashman HC","مركز الحشمان الصحي","Thumrayt","HC",null,[0,0,0,0,0],null],
+ ["bithnah","Bithnah HC","مركز بيثنة الصحي","Thumrayt","HC",null,[0,0,0,0,0],null],
+ ["dhahbun","Dhahbun HC","مركز ذهبون الصحي","Thumrayt","HC",null,[0,0,0,0,0],null]
+].map(r => ({ id:r[0], en:r[1], ar:r[2], wil:r[3], type:r[4], lab:r[5], r25:r[6], r26:r[7] }));
+
+/* Radiology service profile (S5): hours/week, PACS vendor, storage TB, X-ray exams, CT exams, period, equipment
+   equipment: [type, vendor, model, yearInstalled, status]                                                     */
+const RAD = {
+ saadah:  [35,"Carestream",4,2255,0,"9m",[["xray","Carestream","Q Vision HF",2019,"inuse"]]],
+ dahareez:[35,"Fujifilm",6,1055,0,"9m",[["xray","Fujifilm","FDR Smart",2024,"inuse"]]],
+ gharbia: [35,"Carestream",4,1366,0,"9m",[["xray","Carestream","QGV-32",2020,"inuse"]]],
+ jadidah: [35,"Carestream",4,752,0,"9m",[["xray","Carestream","Q Vision HF",2020,"inuse"]]],
+ awqad:   [35,"Carestream",4,1532,0,"9m",[["xray","Carestream","Q Vision HF",2019,"inuse"]]],
+ taqah:   [101,"Carestream",4,3498,0,"9m",[["xray","DRGAM","DXR-82SD",2024,"inuse"]]],
+ madinat: [35,"Carestream",4,338,0,"9m",[["xray","Carestream","QGV-33",2015,"inuse"]]],
+ mirbat:  [84,"Carestream",4,2752,0,"9m",[["xray","Carestream","DRX Compass",2024,"inuse"]]],
+ tawi:    [70,"Carestream",4,313,0,"9m",[["xray","Carestream","QGV-32",2015,"inuse"]]],
+ sadah:   [70,"Carestream",4,543,0,"9m",[["xray","Quantum","Q-Rad System",2009,"condemn"]]],
+ rakhyut: [35,"Fujifilm",4,193,0,"9m",[["xray","Fujifilm","Q Vision HF",2020,"inuse"]]],
+ shahb:   [84,"Fujifilm",6,1558,0,"9m",[["xray","Fujifilm","FDR Smart",2024,"inuse"]]],
+ dalkut:  [35,"Carestream",4,313,0,"9m",[["xray","Carestream","FDR Smart",2021,"inuse"]]],
+ thumrayt:[84,"Carestream",4,2081,0,"9m",[["xray","Carestream","Q Vision HF",2019,"inuse"],["mobile","Shimadzu","MobileDaRt Evolution MXSc CE",2024,"inuse"]]],
+ shalim:  [70,"Carestream",4,1020,0,"9m",[["xray","Carestream","Q-Vision",2017,"inuse"]]],
+ shuwaymiyah:[35,"Fujifilm",4,157,0,"9m",[["xray","Carestream","Q-Rad System",2018,"inuse"]]],
+ muqshin: [35,"Fujifilm",3,114,0,"9m",[["xray","Fujifilm","FDR Smart",2016,"inuse"]]],
+ mazyunah:[168,"Enterprise",32,4661,316,"11m",[["xray","Carestream","DRX Compass",2024,"inuse"],["mobile","Carestream","DRX-Rise Mobile",2024,"inuse"],["mobile","Carestream","DRX-Rise Mobile",2024,"inuse"],["ct","GE","Revolution Maxima",2024,"inuse"]]]
+};
+
+/* Governorate-level radiographer qualification mix (S5 Workforce, aggregated — no individual rows kept) */
+const QUAL = { Diploma:17, BSc:19, MSc:1 };
+
+/* Template sections in S5 and whether the Directorate has filled them yet */
+const TEMPLATE_SECTIONS = [
+ ["Facility Overview",1],["Workforce",1],["Equipment Inventory",1],["Exam Volume",1],["PACS & Archive",1],
+ ["Digital Maturity",0.5],["Turnaround Time",0],["Reporting & Workflow",0],["Quality & Audit",0],
+ ["Demand & Coverage",0],["Readiness & Training",0],["Clinical Effectiveness",0],["Equity & Access",0],
+ ["Cost & Utilization",0],["Accreditation & Risk",0],["Upcoming Projects",0.5]
+];
+
+/* Audit tools (external) */
+const AUDITS = [
+ { key:"general", url:"https://idrisaljumah.github.io/health-servivces-section-audit/" },
+ { key:"dental",  url:"https://idrisaljumah.github.io/dental-services-audit/" },
+ { key:"lab",     url:"https://idrisaljumah.github.io/Smart-Laboratory-Audit-Tool-V.1/" },
+ { key:"radiology", url:"https://idrisaljumah.github.io/Radiology-Audit/" },
+ { key:"mental",  url:"https://idrisaljumah.github.io/Smart-Mental-Health-SOB-V1/" }
+];
+</script>
+<script>(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = n => n == null ? "—" : Number(n).toLocaleString("en-US", { maximumFractionDigits: 1 });
+const REF_YEAR = 2026;
+
+/* ===================== i18n ===================== */
+const T = {
+ en:{
+  brand:"Dhofar Health Services", langBtn:"ع", navExplore:"Institutions", navAudits:"Audits", ctaOpen:"Open dashboard",
+  heroEyebrow:"Dhofar Governorate · Health services platform", heroH1a:"Every institution.", heroH1b:"One clear view.",
+  heroTag:"General · Dental · Lab · Radiology · Mental health", panelTitle:"Laboratory", panelSub:"Service<br>coverage across<br>institutions",
+  heroL1:"Health<br>institutions<br>in 10 wilayats", heroL2:"Laboratory<br>staff<br>in post", meetLbl:"See gaps at a glance",
+  footL:"Dhofar Health Services · Compiled from Directorate files · Personal data removed", footR:"Data sources & notes",
+  tabs:{overview:"Overview",institutions:"Institutions",compare:"Compare",gaps:"Gaps",lab:"Laboratory",radiology:"Radiology",audits:"Audits",data:"Data notes"},
+  H:"Hospital", HC:"Health centre", Hs:"Hospitals", HCs:"Health centres",
+  dom:{general:"General / GP", dental:"Dental", lab:"Laboratory", radiology:"Radiology", mental:"Mental health"}, domS:{general:"GP", dental:"Dental", lab:"Lab", radiology:"X-ray", mental:"Mental"}, visitS:"Visit",
+  all:"All", allWil:"All wilayats", search:"Search institutions…", results:"{n} institutions",
+  // overview
+  ovEyebrow:"Governorate overview", ovTitle:"Health services in Dhofar", ovSub:"Every health institution across the 10 wilayats, with staffing and equipment for laboratory and radiology, and audit status for general, dental and mental health services.",
+  kInst:"Health institutions", kInstS:"<b>{h}</b> hospitals · <b>{hc}</b> health centres",
+  kLab:"Laboratory staff", kLabS:"<b>{a}</b> staffed labs · <b>{v}</b> visiting · <b>{p}</b> planned",
+  kRad:"Radiographers in post", kRadS:"<b>+{n}</b> needed in the next phase",
+  kExam:"Imaging exams, 2025 to date", kExamS:"<b>{u}</b> X-ray rooms · <b>1</b> CT scanner",
+  mapT:"Where the institutions are", mapS:"Bubble size = number of institutions. Positions are schematic. Select a wilayat to browse it.", sea:"Arabian Sea",
+  wilT:"Institutions by wilayat", wilS:"Hospitals and health centres",
+  labWT:"Laboratory staff by wilayat", labWS:"Total staff in post",
+  radWT:"Radiographers: in post vs next-phase need", radWS:"By wilayat, latest available count",
+  inPost:"In post", needNext:"Next-phase need",
+  covT:"Data coverage by domain", covS:"How many institutions each domain has data for. Domains without data are collected through the audit tools.",
+  covData:"{n} of {t} institutions", covNone:"Awaiting audits", runAudit:"Run audit",
+  // status labels
+  stLabActive:"{n} staff", stLabVisit:"Visiting (2 days)", stLabPlan:"New service planned", stLabNone:"No lab listed",
+  stRadOk:"Staffed", stRadShort:"Short {n}", stRadNone:"No X-ray service", stRadPlan:"In phased plan",
+  note_approved:"Service approved", note_newproject:"New project under construction", note_ready:"Dept. ready, awaiting radiographers", note_upcoming:"Upcoming project",
+  stEqOk:"Installed {y}", stEqOld:"{a} yrs old", stEqCond:"Condemned, still in use", stEqNone:"No equipment",
+  stAwait:"Awaiting audit",
+  // institutions
+  insEyebrow:"Directory", insTitle:"Institutions", insSub:"Filter by wilayat, type and service. Open any institution to see all five domains.",
+  fAny:"Any service", fLab:"Has lab", fNoLab:"No lab", fXray:"Has X-ray", fGap:"Has a staffing gap",
+  mLab:"Lab staff", mRad:"Radiographers", mExam:"Exams / month",
+  // detail
+  dOverview:"Summary", alsoKnown:"Arabic name", wil:"Wilayat", type:"Type",
+  dLabStaff:"Laboratory staff", dRad:"Radiographers", dNeed:"Next-phase need", dTarget:"Target (all phases)",
+  dExams:"X-ray exams (2025)", dMonthly:"Avg exams / month", dHours:"Operating hours / week", dPacs:"PACS", dStorage:"Archive storage",
+  dReporting:"Reporting", remote:"Remote", localServer:"Local server", equip:"Equipment",
+  eqType:{xray:"X-ray machine", mobile:"Mobile X-ray", ct:"CT scanner"}, installed:"Installed", age:"Age", status:"Status",
+  phases:"Phased staffing plan (Aug 2025)", cur:"Current", p1:"Phase 1", p2:"Phase 2", p3:"Phase 3",
+  trend:"Aug 2025 → Feb 2026", src26:"Feb 2026 count", src25:"Aug 2025 count (not in Feb 2026 list)",
+  noData:"No data has been collected for this domain yet. Run the structured audit to record services, staff and equipment.",
+  openAudit:"Open {d} audit", labPlanNote:"Listed by the Directorate for a new laboratory service.", labVisitNote:"Covered part-time by a visiting team two days a week.", labNoneNote:"No laboratory service listed for this institution.",
+  // compare
+  cmpEyebrow:"Side by side", cmpTitle:"Compare", cmpSub:"Compare wilayats in one table, or pick up to four institutions to compare head to head.",
+  cmpWil:"Wilayats", cmpInst:"Institutions", addInst:"Add an institution…", maxFour:"Up to 4 institutions",
+  colInst:"Institutions", colLabOn:"Labs", colLab:"Lab staff", colRad:"Radiographers", colNeed:"Need", colUnits:"X-ray rooms", colExams:"Exams 2025",
+  metric:"Measure",
+  // gaps
+  gapEyebrow:"Gaps at a glance", gapTitle:"Staffing & equipment gaps", gapSub:"Each row is an institution; each column a domain. Icons and labels carry the status, so nothing relies on colour alone.",
+  gNoLab:"Institutions without a lab", gNoLabS:"of {t} · incl. <b>{p}</b> with a new lab planned", matrixT:"Gap matrix", vendorModel:"Vendor · model", gVisit:"Visiting-only labs", gShort:"Radiographers short (next phase)", gOld:"X-ray units 10+ years or condemned",
+  gShortT:"Largest radiographer shortfalls", gShortS:"Additional radiographers needed, latest list", gEqT:"Equipment needing attention", gEqS:"Age measured to 2026",
+  gPipeT:"New services in the pipeline", gPipeS:"From the laboratory and radiology lists",
+  legendT:"Legend", lgGood:"In place", lgWarn:"Partial / aging", lgSerious:"Shortfall", lgCrit:"Critical", lgInfo:"Planned", lgNone:"Not provided / no data",
+  // lab
+  labEyebrow:"Laboratory", labTitle:"Laboratory services", labSub:"Laboratory staff in post at each institution, with visiting services and planned new laboratories.",
+  lActive:"Staffed laboratories", lVisit:"Visiting service", lPlan:"Planned new labs", lNone:"No lab listed",
+  lBarT:"Staff per institution", lBarS:"Sorted by staff count. Select a bar to open the institution.",
+  lWilT:"Coverage by wilayat", lWilS:"Share of institutions with a laboratory service",
+  // radiology
+  radEyebrow:"Radiology", radTitle:"Radiology services", radSub:"Radiographer workforce and phased plan, X-ray equipment, exam volumes and PACS for every institution.",
+  rCur:"Radiographers in post", rNeed:"Next-phase need", rTarget:"Target after 3 phases", rUnits:"Imaging units", rUnitsS:"{x} X-ray rooms · {m} mobile · {c} CT",
+  rPlanT:"Phased staffing plan", rPlanS:"Current radiographers plus each phase of the Aug 2025 plan",
+  rTrendT:"Change in radiographers", rTrendS:"Aug 2025 vs Feb 2026, institutions on the Feb 2026 list",
+  rVolT:"Average X-ray exams per month", rVolS:"2025 to date (Jan–Sep; Al Mazyunah Jan–Nov)",
+  rPerT:"Exams per radiographer per month", rPerS:"Workload indicator: monthly exams ÷ radiographers in post",
+  rEqT:"Equipment inventory", rEqS:"All imaging units listed in the radiology template",
+  rQualT:"Radiographer qualifications", rQualS:"Governorate total, from the workforce sheet (aggregated)",
+  rHoursT:"Operating hours per week", rHoursS:"All sites report remotely; PACS on a local server",
+  rTplT:"Radiology template completeness", rTplS:"Sections of the comprehensive data template filled so far",
+  filled:"Filled", partial:"Partly filled", empty:"Not yet filled",
+  // audits
+  audEyebrow:"Audits", audTitle:"Structured audits", audSub:"Open the dedicated audit tool for each domain. Each one opens in a new tab.",
+  aDesc:{general:"Health services section audit: services, staffing and processes.", dental:"Dental services audit: clinics, staff and equipment.", lab:"Smart laboratory audit tool: quality, equipment and staffing.", radiology:"Radiology services audit: imaging workflow and safety.", mental:"Mental health SOP: programme standards and follow-up."},
+  aOpen:"Open tool",
+  // data
+  datEyebrow:"About the data", datTitle:"Data sources & notes",
+  sources:"Sources", deid:"De-identification", deidTxt:"Staff names, staff ID numbers and any contact details in the uploaded files were removed. Radiographer qualifications are shown only as a governorate total so that no individual can be singled out.",
+  caveats:"Caveats",
+  cav:[
+   "General/GP, dental and mental health have no institution-level data yet; they show as “Awaiting audit” until the audit tools are completed.",
+   "Radiographer counts use the Feb 2026 list where an institution appears on it (22 institutions); others use the Aug 2025 count.",
+   "Exam volumes cover Jan–Sep 2025, except Al Mazyunah Hospital (Jan–Nov 2025). Monthly averages correct for this.",
+   "Sarfait HC appears in the Aug 2025 radiology list (no staff, no need) but not in the geographic list, so it is not shown.",
+   "Muqshin is listed as a health centre in the geographic list and as a hospital in the radiology template; the geographic list is used.",
+   "Hadbin and Sawb receive a part-time visiting laboratory service (two days); they are counted as visiting, not staffed.",
+   "Wilayat positions on the map are approximate and for orientation only."
+  ],
+  srcList:[
+   ["Geographic list (wilayat → institution)","43 institutions, 10 wilayats"],
+   ["Laboratory staff per institution","27 institutions + 3 planned new services"],
+   ["Radiographers & 3-phase need, Aug 2025","42 institutions"],
+   ["Radiographers & need, Feb 2026","22 institutions"],
+   ["Comprehensive Radiology Data Template — Dhofar","18 facilities: overview, workforce, equipment, exam volume, PACS"],
+   
+  ],
+  srcS:"Source: {s}"
+ },
+ ar:{
+  brand:"خدمات ظفار الصحية", langBtn:"EN", navExplore:"المؤسسات", navAudits:"التدقيق", ctaOpen:"لوحة البيانات",
+  heroEyebrow:"محافظة ظفار · منصة الخدمات الصحية", heroH1a:"كل مؤسسة صحية،", heroH1b:"في رؤية واحدة.",
+  heroTag:"العامة · الأسنان · المختبر · الأشعة · الصحة النفسية", panelTitle:"المختبر", panelSub:"تغطية الخدمة<br>في المؤسسات<br>الصحية",
+  heroL1:"مؤسسة صحية<br>في 10 ولايات", heroL2:"موظفًا<br>في المختبرات", meetLbl:"الفجوات بنظرة واحدة",
+  footL:"خدمات ظفار الصحية · من ملفات المديرية · أُزيلت البيانات الشخصية", footR:"مصادر البيانات والملاحظات",
+  tabs:{overview:"نظرة عامة",institutions:"المؤسسات",compare:"مقارنة",gaps:"الفجوات",lab:"المختبر",radiology:"الأشعة",audits:"التدقيق",data:"عن البيانات"},
+  H:"مستشفى", HC:"مركز صحي", Hs:"مستشفيات", HCs:"مراكز صحية",
+  dom:{general:"الخدمات العامة", dental:"الأسنان", lab:"المختبر", radiology:"الأشعة", mental:"الصحة النفسية"}, domS:{general:"العامة", dental:"الأسنان", lab:"المختبر", radiology:"الأشعة", mental:"النفسية"}, visitS:"زيارة",
+  all:"الكل", allWil:"كل الولايات", search:"ابحث عن مؤسسة…", results:"{n} مؤسسة",
+  ovEyebrow:"نظرة على المحافظة", ovTitle:"الخدمات الصحية في ظفار", ovSub:"جميع المؤسسات الصحية في الولايات العشر، مع القوى العاملة والأجهزة في المختبر والأشعة، وحالة التدقيق للخدمات العامة والأسنان والصحة النفسية.",
+  kInst:"مؤسسة صحية", kInstS:"<b>{h}</b> مستشفيات · <b>{hc}</b> مركزًا صحيًا",
+  kLab:"موظفو المختبرات", kLabS:"<b>{a}</b> مختبرًا عاملاً · <b>{v}</b> زيارة · <b>{p}</b> مخطط",
+  kRad:"فنيو الأشعة الحاليون", kRadS:"<b>+{n}</b> مطلوب في المرحلة القادمة",
+  kExam:"فحوصات الأشعة 2025", kExamS:"<b>{u}</b> غرفة أشعة · <b>1</b> جهاز مقطعي",
+  mapT:"مواقع المؤسسات", mapS:"حجم الدائرة = عدد المؤسسات. المواقع تقريبية. اختر ولاية لاستعراضها.", sea:"بحر العرب",
+  wilT:"المؤسسات حسب الولاية", wilS:"مستشفيات ومراكز صحية",
+  labWT:"موظفو المختبر حسب الولاية", labWS:"إجمالي الموظفين الحاليين",
+  radWT:"فنيو الأشعة: الحاليون مقابل احتياج المرحلة القادمة", radWS:"حسب الولاية، آخر عدد متاح",
+  inPost:"الحاليون", needNext:"احتياج المرحلة القادمة",
+  covT:"تغطية البيانات حسب المجال", covS:"عدد المؤسسات التي تتوفر لها بيانات في كل مجال. تُجمع بيانات المجالات الأخرى عبر أدوات التدقيق.",
+  covData:"{n} من {t} مؤسسة", covNone:"بانتظار التدقيق", runAudit:"ابدأ التدقيق",
+  stLabActive:"{n} موظف", stLabVisit:"زيارة (يومان)", stLabPlan:"خدمة جديدة مخططة", stLabNone:"لا يوجد مختبر",
+  stRadOk:"مكتمل", stRadShort:"نقص {n}", stRadNone:"لا توجد خدمة أشعة", stRadPlan:"ضمن الخطة المرحلية",
+  note_approved:"تمت الموافقة على الخدمة", note_newproject:"مشروع جديد قيد الإنشاء", note_ready:"القسم جاهز بانتظار الفنيين", note_upcoming:"مشروع قادم",
+  stEqOk:"تركيب {y}", stEqOld:"عمره {a} سنوات", stEqCond:"مُكهّن ولا يزال يعمل", stEqNone:"لا توجد أجهزة",
+  stAwait:"بانتظار التدقيق",
+  insEyebrow:"الدليل", insTitle:"المؤسسات", insSub:"صفِّ حسب الولاية والنوع والخدمة. افتح أي مؤسسة لعرض المجالات الخمسة.",
+  fAny:"أي خدمة", fLab:"بها مختبر", fNoLab:"بدون مختبر", fXray:"بها أشعة", fGap:"بها نقص في الكوادر",
+  mLab:"موظفو المختبر", mRad:"فنيو الأشعة", mExam:"فحص / شهر",
+  dOverview:"ملخص", alsoKnown:"الاسم بالإنجليزية", wil:"الولاية", type:"النوع",
+  dLabStaff:"موظفو المختبر", dRad:"فنيو الأشعة", dNeed:"احتياج المرحلة القادمة", dTarget:"المستهدف (كل المراحل)",
+  dExams:"فحوصات الأشعة (2025)", dMonthly:"متوسط الفحوصات / شهر", dHours:"ساعات العمل / أسبوع", dPacs:"نظام PACS", dStorage:"سعة الأرشيف",
+  dReporting:"كتابة التقارير", remote:"عن بُعد", localServer:"خادم محلي", equip:"الأجهزة",
+  eqType:{xray:"جهاز أشعة سينية", mobile:"جهاز أشعة متنقل", ct:"جهاز أشعة مقطعية"}, installed:"سنة التركيب", age:"العمر", status:"الحالة",
+  phases:"خطة الكوادر المرحلية (أغسطس 2025)", cur:"الحالي", p1:"المرحلة 1", p2:"المرحلة 2", p3:"المرحلة 3",
+  trend:"أغسطس 2025 ← فبراير 2026", src26:"عدد فبراير 2026", src25:"عدد أغسطس 2025 (غير مدرجة في قائمة فبراير 2026)",
+  noData:"لم تُجمع بيانات لهذا المجال بعد. استخدم أداة التدقيق لتسجيل الخدمات والكوادر والأجهزة.",
+  openAudit:"افتح تدقيق {d}", labPlanNote:"مدرجة لدى المديرية لافتتاح خدمة مختبر جديدة.", labVisitNote:"تُغطّى بفريق زائر يومين في الأسبوع.", labNoneNote:"لا توجد خدمة مختبر مدرجة لهذه المؤسسة.",
+  cmpEyebrow:"جنبًا إلى جنب", cmpTitle:"مقارنة", cmpSub:"قارن الولايات في جدول واحد، أو اختر حتى أربع مؤسسات للمقارنة المباشرة.",
+  cmpWil:"الولايات", cmpInst:"المؤسسات", addInst:"أضف مؤسسة…", maxFour:"حتى 4 مؤسسات",
+  colInst:"المؤسسات", colLabOn:"المختبرات", colLab:"موظفو المختبر", colRad:"فنيو الأشعة", colNeed:"الاحتياج", colUnits:"غرف الأشعة", colExams:"فحوصات 2025",
+  metric:"المؤشر",
+  gapEyebrow:"الفجوات بنظرة واحدة", gapTitle:"فجوات الكوادر والأجهزة", gapSub:"كل صف مؤسسة وكل عمود مجال. الرموز والنصوص توضح الحالة دون الاعتماد على اللون وحده.",
+  gNoLab:"مؤسسات بلا مختبر", gNoLabS:"من {t} · منها <b>{p}</b> مخطط لها مختبر جديد", matrixT:"مصفوفة الفجوات", vendorModel:"المصنّع · الطراز", gVisit:"مختبرات بزيارات فقط", gShort:"نقص فنيي الأشعة (المرحلة القادمة)", gOld:"أجهزة أشعة 10 سنوات فأكثر أو مُكهّنة",
+  gShortT:"أكبر نقص في فنيي الأشعة", gShortS:"الفنيون الإضافيون المطلوبون، آخر قائمة", gEqT:"أجهزة تحتاج متابعة", gEqS:"العمر محسوب حتى 2026",
+  gPipeT:"خدمات جديدة قيد التنفيذ", gPipeS:"من قوائم المختبر والأشعة",
+  legendT:"دليل الألوان", lgGood:"متوفر", lgWarn:"جزئي / قديم", lgSerious:"نقص", lgCrit:"حرج", lgInfo:"مخطط", lgNone:"غير متوفر / لا بيانات",
+  labEyebrow:"المختبر", labTitle:"خدمات المختبر", labSub:"موظفو المختبر في كل مؤسسة، مع خدمات الزيارة والمختبرات الجديدة المخططة.",
+  lActive:"مختبرات عاملة", lVisit:"خدمة زيارة", lPlan:"مختبرات جديدة مخططة", lNone:"بلا مختبر",
+  lBarT:"الموظفون في كل مؤسسة", lBarS:"مرتبة حسب العدد. اختر شريطًا لفتح المؤسسة.",
+  lWilT:"التغطية حسب الولاية", lWilS:"نسبة المؤسسات التي لديها خدمة مختبر",
+  radEyebrow:"الأشعة", radTitle:"خدمات الأشعة", radSub:"قوى فنيي الأشعة والخطة المرحلية والأجهزة وحجم الفحوصات ونظام PACS لكل مؤسسة.",
+  rCur:"فنيو الأشعة الحاليون", rNeed:"احتياج المرحلة القادمة", rTarget:"المستهدف بعد 3 مراحل", rUnits:"أجهزة التصوير", rUnitsS:"{x} غرفة أشعة · {m} متنقل · {c} مقطعي",
+  rPlanT:"خطة الكوادر المرحلية", rPlanS:"الفنيون الحاليون مع كل مرحلة من خطة أغسطس 2025",
+  rTrendT:"التغير في عدد الفنيين", rTrendS:"أغسطس 2025 مقابل فبراير 2026 للمؤسسات المدرجة في قائمة فبراير",
+  rVolT:"متوسط فحوصات الأشعة شهريًا", rVolS:"2025 حتى تاريخه (يناير–سبتمبر؛ المزيونة يناير–نوفمبر)",
+  rPerT:"الفحوصات لكل فني شهريًا", rPerS:"مؤشر عبء العمل: الفحوصات الشهرية ÷ الفنيين الحاليين",
+  rEqT:"سجل الأجهزة", rEqS:"جميع أجهزة التصوير المدرجة في نموذج الأشعة",
+  rQualT:"مؤهلات فنيي الأشعة", rQualS:"إجمالي المحافظة من ورقة القوى العاملة (مجمّع)",
+  rHoursT:"ساعات العمل الأسبوعية", rHoursS:"جميع المواقع ترسل التقارير عن بُعد؛ PACS على خادم محلي",
+  rTplT:"اكتمال نموذج بيانات الأشعة", rTplS:"أقسام النموذج الشامل التي تمت تعبئتها حتى الآن",
+  filled:"مكتمل", partial:"مكتمل جزئيًا", empty:"لم يُعبأ بعد",
+  audEyebrow:"التدقيق", audTitle:"التدقيق المنظم", audSub:"افتح أداة التدقيق المخصصة لكل مجال. تفتح كل أداة في تبويب جديد.",
+  aDesc:{general:"تدقيق قسم الخدمات الصحية: الخدمات والكوادر والإجراءات.", dental:"تدقيق خدمات الأسنان: العيادات والكوادر والأجهزة.", lab:"أداة التدقيق الذكية للمختبر: الجودة والأجهزة والكوادر.", radiology:"تدقيق خدمات الأشعة: سير العمل والسلامة.", mental:"إجراءات الصحة النفسية: معايير البرنامج والمتابعة."},
+  aOpen:"افتح الأداة",
+  datEyebrow:"عن البيانات", datTitle:"مصادر البيانات والملاحظات",
+  sources:"المصادر", deid:"إخفاء الهوية", deidTxt:"أُزيلت أسماء الموظفين وأرقامهم الوظيفية وأي بيانات اتصال من الملفات. تُعرض مؤهلات فنيي الأشعة كإجمالي للمحافظة فقط حتى لا يمكن تمييز أي فرد.",
+  caveats:"ملاحظات",
+  cav:[
+   "لا توجد بعد بيانات على مستوى المؤسسة للخدمات العامة والأسنان والصحة النفسية، وتظهر «بانتظار التدقيق» حتى تُستكمل أدوات التدقيق.",
+   "أعداد فنيي الأشعة من قائمة فبراير 2026 للمؤسسات المدرجة فيها (22 مؤسسة)، وللبقية من قائمة أغسطس 2025.",
+   "حجم الفحوصات من يناير إلى سبتمبر 2025، عدا مستشفى المزيونة (يناير–نوفمبر 2025). المتوسطات الشهرية تراعي ذلك.",
+   "مركز صرفيت مدرج في قائمة الأشعة لأغسطس 2025 (بلا كوادر أو احتياج) لكنه غير مدرج في القائمة الجغرافية، لذا لا يظهر.",
+   "مقشن مدرجة كمركز صحي في القائمة الجغرافية وكمستشفى في نموذج الأشعة؛ اعتُمدت القائمة الجغرافية.",
+   "حدبين وصوب تتلقيان خدمة مختبر بزيارة جزئية (يومان)، وتُحتسبان كزيارة لا كمختبر عامل.",
+   "مواقع الولايات على الخريطة تقريبية للتوضيح فقط."
+  ],
+  srcList:[
+   ["القائمة الجغرافية (الولاية ← المؤسسة)","43 مؤسسة، 10 ولايات"],
+   ["موظفو المختبر لكل مؤسسة","27 مؤسسة + 3 خدمات جديدة مخططة"],
+   ["فنيو الأشعة والاحتياج على 3 مراحل، أغسطس 2025","42 مؤسسة"],
+   ["فنيو الأشعة والاحتياج، فبراير 2026","22 مؤسسة"],
+   ["النموذج الشامل لبيانات الأشعة — ظفار","18 منشأة: نظرة عامة، القوى العاملة، الأجهزة، الفحوصات، PACS"],
+   
+  ],
+  srcS:"المصدر: {s}"
+ }
+};
+let LANG = document.documentElement.lang === "ar" ? "ar" : "en";
+const t = (k, vars) => {
+  let v = k.split(".").reduce((o, p) => (o == null ? o : o[p]), T[LANG]);
+  if (v == null) v = k.split(".").reduce((o, p) => (o == null ? o : o[p]), T.en);
+  if (typeof v === "string" && vars) v = v.replace(/\{(\w+)\}/g, (_, x) => vars[x] != null ? vars[x] : "");
+  return v;
+};
+const nm = i => LANG === "ar" ? i.ar : i.en;
+const wn = w => LANG === "ar" ? WILAYAT[w].ar : w;
+
+/* ===================== derived model ===================== */
+INST.forEach(i => {
+  i.labStatus = typeof i.lab === "number" ? "active" : i.lab === "visit" ? "visit" : i.lab === "plan" ? "plan" : "none";
+  i.labStaff = typeof i.lab === "number" ? i.lab : 0;
+  i.radCur = i.r26 ? i.r26[0] : (i.r25 ? i.r25[0] : 0);
+  i.radSrc = i.r26 ? "26" : "25";
+  i.radNeed = i.r26 ? i.r26[1] : (i.r25 ? i.r25[1] : 0);
+  i.radTarget = i.r25 ? i.r25[4] : i.radCur + i.radNeed;
+  i.radNote = i.r26 && i.r26[2] || null;
+  const R = RAD[i.id];
+  i.R = R ? { hours:R[0], pacs:R[1], tb:R[2], xr:R[3], ct:R[4], months:R[5] === "11m" ? 11 : 9,
+    equip: R[6].map(e => ({ type:e[0], vendor:e[1], model:e[2], year:e[3], status:e[4], age:REF_YEAR - e[3] })) } : null;
+  if (i.R){ i.R.total = i.R.xr + i.R.ct; i.R.monthly = i.R.xr / i.R.months; }
+  i.units = i.R ? i.R.equip.length : 0;
+  i.oldest = i.R ? Math.max(...i.R.equip.map(e => e.age)) : null;
+  i.condemned = i.R ? i.R.equip.some(e => e.status === "condemn") : false;
+});
+const WLIST = Object.keys(WILAYAT).sort((a,b) => INST.filter(i=>i.wil===b).length - INST.filter(i=>i.wil===a).length || a.localeCompare(b));
+const byWil = w => INST.filter(i => i.wil === w);
+const sum = (arr, f) => arr.reduce((s, x) => s + (f(x) || 0), 0);
+const TOT = {
+  inst: INST.length, hosp: INST.filter(i=>i.type==="H").length,
+  labStaff: sum(INST, i=>i.labStaff), labActive: INST.filter(i=>i.labStatus==="active").length,
+  labVisit: INST.filter(i=>i.labStatus==="visit").length, labPlan: INST.filter(i=>i.labStatus==="plan").length,
+  radCur: sum(INST, i=>i.radCur), radNeed: sum(INST, i=>i.radNeed), radTarget: sum(INST, i=>i.radTarget),
+  exams: sum(INST, i=>i.R && i.R.total), xrayRooms: sum(INST, i=>i.R && i.R.equip.filter(e=>e.type==="xray").length),
+  mobile: sum(INST, i=>i.R && i.R.equip.filter(e=>e.type==="mobile").length), ct: sum(INST, i=>i.R && i.R.equip.filter(e=>e.type==="ct").length)
+};
+
+/* ===================== status helpers ===================== */
+const ICON = { good:"i-check", warn:"i-warn", serious:"i-warn", crit:"i-x", info:"i-info", none:"i-dash" };
+const chip = (k, label, tip) => `<span class="chip st-${k}"${tip?` data-tip="${esc(tip)}"`:""}><svg aria-hidden="true"><use href="#${ICON[k]}"/></svg>${esc(label)}</span>`;
+const DOT = { good:"var(--good)", warn:"var(--warn)", serious:"var(--serious)", crit:"var(--crit)", info:"var(--info)", none:"var(--none)" };
+function labSt(i){
+  if (i.labStatus === "active") return ["good", t("stLabActive",{n:i.labStaff})];
+  if (i.labStatus === "visit") return ["warn", t("stLabVisit")];
+  if (i.labStatus === "plan") return ["info", t("stLabPlan")];
+  return ["none", t("stLabNone")];
+}
+function radSt(i){
+  if (i.R || i.radCur > 0){
+    return i.radNeed > 0 ? ["serious", t("stRadShort",{n:i.radNeed})] : ["good", t("stRadOk")];
+  }
+  if (i.radNote) return ["info", t("note_" + i.radNote)];
+  if (i.radTarget > 0) return ["info", t("stRadPlan")];
+  return ["none", t("stRadNone")];
+}
+function eqSt(i){
+  if (!i.R) return ["none", t("stEqNone")];
+  if (i.condemned) return ["crit", t("stEqCond")];
+  if (i.oldest >= 10) return ["warn", t("stEqOld",{a:i.oldest})];
+  return ["good", t("stEqOk",{y:Math.min(...i.R.equip.map(e=>e.year))})];
+}
+const awaitSt = () => ["none", t("stAwait")];
+const domainSt = (i, d) => d === "lab" ? labSt(i) : d === "radiology" ? radSt(i) : awaitSt();
+const DOMS = ["general","dental","lab","radiology","mental"];
+const DOM_ICON = { general:"i-steth", dental:"i-tooth", lab:"i-lab", radiology:"i-rad", mental:"i-mind" };
+const auditUrl = d => AUDITS.find(a => a.key === d).url;
+
+/* ===================== chart helpers ===================== */
+function bars(rows, opt = {}){
+  const max = opt.max || Math.max(1, ...rows.map(r => r.segs.reduce((s,g)=>s+g.v,0)));
+  return `<div class="bars">${rows.map(r => {
+    const tot = r.segs.reduce((s,g)=>s+g.v,0);
+    const segs = r.segs.filter(g=>g.v>0).map(g => `<span class="seg" style="width:${(g.v/max*100).toFixed(2)}%;background:${g.c}"></span>`).join("");
+    return `<div class="bar-row${r.href?" clickable":""}"${r.href?` data-go="${r.href}"`:""} data-tip="${esc(r.tip || `<b>${esc(r.label)}</b><br>${fmt(tot)}`)}">
+      <span class="bl">${esc(r.label)}</span><span class="bar-track">${segs || '<span class="seg" style="width:2px;background:var(--line-2)"></span>'}</span><span class="bv">${r.vLabel != null ? r.vLabel : fmt(tot)}</span></div>`;
+  }).join("")}</div>`;
+}
+const legend = items => `<div class="legend">${items.map(([c,l]) => `<span><i style="background:${c}"></i>${esc(l)}</span>`).join("")}</div>`;
+const box = (title, sub, body, cls = "", src = "") => `<section class="box ${cls} fade-in"><div class="box-h"><div><h3>${title}</h3>${sub?`<p class="sub">${sub}</p>`:""}</div></div>${body}${src?`<p class="src">${esc(t("srcS",{s:src}))}</p>`:""}</section>`;
+const kpi = (label, value, sub) => `<div class="box kpi fade-in"><span class="k-l">${label}</span><span class="k-v">${value}</span>${sub?`<span class="k-s">${sub}</span>`:""}</div>`;
+const head = (eb, title, sub, right = "") => `<div class="view-head"><div><p class="eyebrow-s">${eb}</p><h2>${title}</h2>${sub?`<p>${sub}</p>`:""}</div>${right}</div>`;
+
+function mapSVG(){
+  const W = 600, H = 380;
+  const POS = {"Al Mazyunah":[80,150],"Dhalqut":[95,290],"Rakhyut":[185,300],"Salalah":[285,282],"Thumrayt":[290,150],"Taqah":[375,300],"Mirbat":[455,292],"Sadah":[530,250],"Shalim":[505,140],"Muqshin":[385,55]};
+  const coast = [[20,330],[120,330],[200,338],[285,330],[375,340],[455,334],[540,300],[575,215],[590,190]];
+  const path = coast.map((p,k)=>`${k?"L":"M"}${p[0]} ${p[1]}`).join(" ");
+  const bub = WLIST.map(w => {
+    const W0 = WILAYAT[w], list = byWil(w), n = list.length, r = 9 + Math.sqrt(n) * 7.5;
+    const lab = list.filter(i=>i.labStatus==="active").length;
+    const tip = `<b>${esc(wn(w))}</b><br>${n} · ${esc(t("colLabOn"))}: ${lab}/${n}<br>${esc(t("colRad"))}: ${sum(list,i=>i.radCur)}`;
+    const lx = POS[w][0], ly = POS[w][1];
+    const below = w !== "Muqshin";
+    return `<g class="bub" data-wil="${esc(w)}" data-tip="${esc(tip)}" tabindex="0" role="button" aria-label="${esc(wn(w))}">
+      <circle class="c" cx="${lx}" cy="${ly}" r="${r}" fill="var(--s1)" fill-opacity=".18" stroke="var(--s1)" stroke-width="2"/>
+      <text x="${lx}" y="${ly+4}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">${n}</text>
+      <text x="${lx}" y="${below ? ly + r + 14 : ly - r - 6}" text-anchor="middle" font-size="12" fill="var(--ink-2)">${esc(wn(w))}</text></g>`;
+  }).join("");
+  return `<div class="map"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t("mapT"))}">
+    <path d="${path}" fill="none" stroke="var(--line-2)" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <text x="300" y="368" text-anchor="middle" font-size="12" fill="var(--muted)" font-style="italic">${esc(t("sea"))}</text>${bub}</svg></div>`;
+}
+
+/* ===================== views ===================== */
+const VIEWS = {};
+const UI = { wil:"", type:"", svc:"", q:"", cmp:["taqah","mirbat","thumrayt","mazyunah"], gapWil:"", labWil:"", cmpSort:["inst",-1] };
+
+VIEWS.overview = () => {
+  const covRow = d => {
+    const n = d === "lab" || d === "radiology" ? TOT.inst : 0;
+    const pct = n / TOT.inst * 100;
+    return `<div class="bar-row" style="grid-template-columns:minmax(120px,170px) 1fr auto">
+      <span class="bl" style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" aria-hidden="true" style="color:var(--accent)"><use href="#${DOM_ICON[d]}"/></svg>${esc(t("dom."+d))}</span>
+      <span class="bar-track"><span class="seg" style="width:${Math.max(pct,0.5)}%;background:${n?"var(--s1)":"var(--line-2)"}"></span></span>
+      <span>${n ? `<span class="chip st-good"><svg aria-hidden="true"><use href="#i-check"/></svg>${esc(t("covData",{n,t:TOT.inst}))}</span>` : `<a class="chip st-none" href="${auditUrl(d)}" target="_blank" rel="noopener" style="text-decoration:none"><svg aria-hidden="true"><use href="#i-dash"/></svg>${esc(t("covNone"))} · ${esc(t("runAudit"))} ↗</a>`}</span></div>`;
+  };
+  const wilRows = WLIST.map(w => { const l = byWil(w);
+    const h = l.filter(i=>i.type==="H").length, c = l.length - h;
+    return { label: wn(w), href:"wil:"+w, segs:[{v:h,c:"var(--q550)"},{v:c,c:"var(--q250)"}],
+      tip:`<b>${esc(wn(w))}</b><br>${esc(t("Hs"))}: ${h}<br>${esc(t("HCs"))}: ${c}` }; });
+  const labRows = WLIST.map(w => ({ label: wn(w), href:"wil:"+w, segs:[{v:sum(byWil(w),i=>i.labStaff),c:"var(--s1)"}] })).sort((a,b)=>b.segs[0].v-a.segs[0].v);
+  const radRows = WLIST.map(w => { const l = byWil(w), c = sum(l,i=>i.radCur), n = sum(l,i=>i.radNeed);
+    return { label: wn(w), href:"wil:"+w, segs:[{v:c,c:"var(--s1)"},{v:n,c:"var(--s2)"}], vLabel:`${c}<span style="color:var(--muted)"> +${n}</span>`,
+      tip:`<b>${esc(wn(w))}</b><br>${esc(t("inPost"))}: ${c}<br>${esc(t("needNext"))}: ${n}` }; }).sort((a,b)=>(b.segs[0].v+b.segs[1].v)-(a.segs[0].v+a.segs[1].v));
+  return head(t("ovEyebrow"), t("ovTitle"), t("ovSub")) +
+  `<div class="grid g-4">
+    ${kpi(t("kInst"), TOT.inst, t("kInstS",{h:TOT.hosp,hc:TOT.inst-TOT.hosp}))}
+    ${kpi(t("kLab"), TOT.labStaff, t("kLabS",{a:TOT.labActive,v:TOT.labVisit,p:TOT.labPlan}))}
+    ${kpi(t("kRad"), TOT.radCur, t("kRadS",{n:TOT.radNeed}))}
+    ${kpi(t("kExam"), fmt(TOT.exams), t("kExamS",{u:TOT.xrayRooms}))}
+  </div>
+  <div class="grid g-12" style="margin-top:16px">
+    ${box(t("mapT"), t("mapS"), mapSVG(), "span-7")}
+    ${box(t("wilT"), t("wilS"), legend([["var(--q550)",t("Hs")],["var(--q250)",t("HCs")]]) + `<div style="height:12px"></div>` + bars(wilRows), "span-5", "Geographic list")}
+    ${box(t("labWT"), t("labWS"), bars(labRows), "span-6", "Laboratory staff list")}
+    ${box(t("radWT"), t("radWS"), legend([["var(--s1)",t("inPost")],["var(--s2)",t("needNext")]]) + `<div style="height:12px"></div>` + bars(radRows), "span-6", "Radiographers Feb 2026 / Aug 2025")}
+    ${box(t("covT"), t("covS"), `<div class="bars" style="gap:10px">${DOMS.map(covRow).join("")}</div>`, "span-12")}
+  </div>`;
+};
+
+function filtered(){
+  const q = UI.q.trim().toLowerCase();
+  return INST.filter(i =>
+    (!UI.wil || i.wil === UI.wil) && (!UI.type || i.type === UI.type) &&
+    (!q || i.en.toLowerCase().includes(q) || i.ar.includes(UI.q.trim()) || i.wil.toLowerCase().includes(q) || WILAYAT[i.wil].ar.includes(UI.q.trim())) &&
+    (!UI.svc || (UI.svc === "lab" && i.labStatus === "active") || (UI.svc === "nolab" && i.labStatus !== "active") ||
+      (UI.svc === "xray" && !!i.R) || (UI.svc === "gap" && (i.radNeed > 0 || i.labStatus === "plan" || i.labStatus === "visit"))));
+}
+const wilSelect = (val, attr) => `<select class="select" ${attr}><option value="">${esc(t("allWil"))}</option>${WLIST.map(w=>`<option value="${esc(w)}"${val===w?" selected":""}>${esc(wn(w))} (${byWil(w).length})</option>`).join("")}</select>`;
+const segCtl = (name, val, opts) => `<div class="seg-ctl" role="group">${opts.map(([v,l])=>`<button type="button" data-seg="${name}" data-v="${v}" aria-pressed="${val===v}">${esc(l)}</button>`).join("")}</div>`;
+
+VIEWS.institutions = () => head(t("insEyebrow"), t("insTitle"), t("insSub")) +
+  `<div class="controls">
+    <input class="input" type="search" id="q" placeholder="${esc(t("search"))}" value="${esc(UI.q)}" style="flex:1 1 220px;max-width:320px">
+    ${wilSelect(UI.wil, 'id="fwil"')}
+    ${segCtl("type", UI.type, [["",t("all")],["H",t("Hs")],["HC",t("HCs")]])}
+    <select class="select" id="fsvc">${[["",t("fAny")],["lab",t("fLab")],["nolab",t("fNoLab")],["xray",t("fXray")],["gap",t("fGap")]].map(([v,l])=>`<option value="${v}"${UI.svc===v?" selected":""}>${esc(l)}</option>`).join("")}</select>
+    <span class="count" id="cnt"></span>
+  </div><div class="cards" id="cards"></div>`;
+
+function renderCards(){
+  const list = filtered();
+  $("#cnt").textContent = t("results",{n:list.length});
+  $("#cards").innerHTML = list.map(i => `<button class="icard fade-in" data-inst="${i.id}" type="button">
+    <div><h4>${esc(nm(i))}</h4><div class="meta"><span class="badge">${esc(t(i.type))}</span>${esc(wn(i.wil))}</div></div>
+    <div class="domains">${DOMS.map(d => { const [k,l] = domainSt(i,d); return `<span class="dm" data-tip="${esc(`<b>${esc(t("dom."+d))}</b><br>${esc(l)}`)}"><i style="background:${DOT[k]}"></i>${esc(t("domS."+d))}</span>`; }).join("")}</div>
+    <div class="mini"><div><b>${i.labStaff || (i.labStatus==="visit"?`<span style="font-size:13px">${esc(t("visitS"))}</span>`:"—")}</b>${esc(t("mLab"))}</div><div><b>${i.radCur || "—"}</b>${esc(t("mRad"))}</div><div><b>${i.R ? fmt(Math.round(i.R.monthly)) : "—"}</b>${esc(t("mExam"))}</div></div>
+  </button>`).join("") || `<div class="empty">—</div>`;
+}
+
+/* ---------- detail sheet ---------- */
+let DETAIL_TAB = "overview";
+function openInst(id, tab){
+  const i = INST.find(x => x.id === id); if (!i) return;
+  DETAIL_TAB = tab || "overview";
+  const m = $("#modal"); m.setAttribute("open",""); m.dataset.inst = id;
+  renderSheet(i);
+  setTimeout(() => $("#sheet .close") && $("#sheet .close").focus(), 30);
+}
+function closeModal(){ const m = $("#modal"); if (!m.hasAttribute("open")) return; m.removeAttribute("open");
+  if (location.hash.startsWith("#inst-")) history.replaceState(null, "", "#institutions"); }
+function domainPanel(i, d){
+  const [k,l] = domainSt(i,d);
+  const auditBtn = `<a class="btn" href="${auditUrl(d)}" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ext"/></svg>${esc(t("openAudit",{d:t("dom."+d)}))}</a>`;
+  if (d === "general" || d === "dental" || d === "mental")
+    return `<div style="margin-bottom:12px">${chip(k,l)}</div><div class="empty">${esc(t("noData"))}<br>${auditBtn}</div>`;
+  if (d === "lab"){
+    const note = i.labStatus === "plan" ? t("labPlanNote") : i.labStatus === "visit" ? t("labVisitNote") : i.labStatus === "none" ? t("labNoneNote") : "";
+    return `<div style="margin-bottom:14px">${chip(k,l)}</div>
+      <div class="kv"><div><span>${esc(t("dLabStaff"))}</span><b>${i.labStaff || "—"}</b></div><div><span>${esc(t("wil"))}</span><b style="font-size:16px">${esc(wn(i.wil))}</b></div></div>
+      ${note ? `<p class="note" style="margin-top:12px"><svg aria-hidden="true"><use href="#i-info"/></svg>${esc(note)}</p>` : ""}
+      <div style="margin-top:16px">${auditBtn}</div><p class="src">${esc(t("srcS",{s:"Laboratory staff list"}))}</p>`;
+  }
+  // radiology
+  let h = `<div style="margin-bottom:14px;display:flex;gap:6px;flex-wrap:wrap">${chip(k,l)} ${i.R ? chip(...eqSt(i)) : ""}</div>
+    <div class="kv"><div><span>${esc(t("dRad"))}</span><b>${i.radCur}</b><span>${esc(i.radSrc==="26"?t("src26"):t("src25"))}</span></div>
+    <div><span>${esc(t("dNeed"))}</span><b>${i.radNeed}</b></div>
+    <div><span>${esc(t("dTarget"))}</span><b>${i.radTarget}</b></div>
+    ${i.R ? `<div><span>${esc(t("dMonthly"))}</span><b>${fmt(Math.round(i.R.monthly))}</b><span>${esc(t("dExams"))}: ${fmt(i.R.total)}</span></div>
+    <div><span>${esc(t("dHours"))}</span><b>${i.R.hours}</b></div><div><span>${esc(t("dPacs"))}</span><b style="font-size:16px">${esc(i.R.pacs)} · ${i.R.tb} TB</b><span>${esc(t("localServer"))} · ${esc(t("dReporting"))}: ${esc(t("remote"))}</span></div>` : ""}</div>`;
+  if (i.radNote) h += `<p class="note" style="margin-top:12px"><svg aria-hidden="true"><use href="#i-info"/></svg>${esc(t("note_"+i.radNote))}</p>`;
+  if (i.r25){
+    const [c,p1,p2,p3] = i.r25;
+    h += `<h4 style="margin:20px 0 10px;font-size:14px">${esc(t("phases"))}</h4>` + legend([["var(--q700)",t("cur")],["var(--q550)",t("p1")],["var(--q400)",t("p2")],["var(--q250)",t("p3")]]) + `<div style="height:10px"></div>` +
+      bars([{label:nm(i), segs:[{v:c,c:"var(--q700)"},{v:p1,c:"var(--q550)"},{v:p2,c:"var(--q400)"},{v:p3,c:"var(--q250)"}],
+        tip:`${esc(t("cur"))}: ${c}<br>${esc(t("p1"))}: +${p1}<br>${esc(t("p2"))}: +${p2}<br>${esc(t("p3"))}: +${p3}`}], {max: Math.max(8, c+p1+p2+p3)});
+  }
+  if (i.r25 && i.r26) h += `<p class="sub" style="margin-top:10px">${esc(t("trend"))}: <b>${i.r25[0]} → ${i.r26[0]}</b></p>`;
+  if (i.R){
+    h += `<h4 style="margin:20px 0 10px;font-size:14px">${esc(t("equip"))}</h4><div class="tbl-wrap"><table><thead><tr><th>${esc(t("type"))}</th><th>${esc(t("vendorModel"))}</th><th class="num-c">${esc(t("installed"))}</th><th>${esc(t("status"))}</th></tr></thead><tbody>` +
+      i.R.equip.map(e => `<tr><td>${esc(t("eqType."+e.type))}</td><td>${esc(e.vendor)} · ${esc(e.model)}</td><td class="num-c">${e.year}</td><td>${e.status==="condemn"?chip("crit",t("stEqCond")):e.age>=10?chip("warn",t("stEqOld",{a:e.age})):chip("good",t("stEqOk",{y:e.year}))}</td></tr>`).join("") + `</tbody></table></div>`;
+  }
+  h += `<div style="margin-top:16px">${auditBtn}</div><p class="src">${esc(t("srcS",{s:"Radiology template; radiographer lists Aug 2025 / Feb 2026"}))}</p>`;
+  return h;
+}
+function renderSheet(i){
+  const tabs = ["overview", ...DOMS];
+  let body;
+  if (DETAIL_TAB === "overview"){
+    body = `<div class="tbl-wrap"><table><tbody>${DOMS.map(d => `<tr class="rowlink" data-dtab="${d}"><td style="display:flex;align-items:center;gap:10px"><svg width="18" height="18" aria-hidden="true" style="color:var(--accent)"><use href="#${DOM_ICON[d]}"/></svg>${esc(t("dom."+d))}</td><td>${chip(...domainSt(i,d))}</td><td style="text-align:end;color:var(--muted)">›</td></tr>`).join("")}</tbody></table></div>
+      <div class="kv" style="margin-top:14px"><div><span>${esc(t("dLabStaff"))}</span><b>${i.labStaff || "—"}</b></div><div><span>${esc(t("dRad"))}</span><b>${i.radCur || "—"}</b></div>
+      <div><span>${esc(t("rUnits"))}</span><b>${i.units || "—"}</b></div><div><span>${esc(t("dMonthly"))}</span><b>${i.R ? fmt(Math.round(i.R.monthly)) : "—"}</b></div></div>`;
+  } else body = domainPanel(i, DETAIL_TAB);
+  $("#sheet").innerHTML = `<button class="close" type="button" data-close aria-label="Close">✕</button>
+    <p class="eyebrow-s">${esc(t(i.type))} · ${esc(wn(i.wil))}</p><h2 id="m-title">${esc(nm(i))}</h2>
+    <p class="sub" style="color:var(--muted)">${esc(t("alsoKnown"))}: ${esc(LANG==="ar"?i.en:i.ar)}</p>
+    <div class="dtabs" role="tablist">${tabs.map(x=>`<button role="tab" type="button" data-dtab="${x}" aria-selected="${DETAIL_TAB===x}">${esc(x==="overview"?t("dOverview"):t("dom."+x))}</button>`).join("")}</div>
+    <div class="fade-in">${body}</div>`;
+}
+
+/* ---------- compare ---------- */
+VIEWS.compare = () => {
+  const cols = [["inst",t("colInst"),w=>byWil(w).length],["lab",t("colLabOn"),w=>byWil(w).filter(i=>i.labStatus==="active").length],["labs",t("colLab"),w=>sum(byWil(w),i=>i.labStaff)],
+    ["rad",t("colRad"),w=>sum(byWil(w),i=>i.radCur)],["need",t("colNeed"),w=>sum(byWil(w),i=>i.radNeed)],["units",t("colUnits"),w=>sum(byWil(w),i=>i.R&&i.R.equip.filter(e=>e.type==="xray").length)],["exams",t("colExams"),w=>sum(byWil(w),i=>i.R&&i.R.total)]];
+  const [sk, sd] = UI.cmpSort; const sc = cols.find(c=>c[0]===sk) || cols[0];
+  const rows = WLIST.slice().sort((a,b)=>(sc[2](a)-sc[2](b))*sd);
+  const maxes = cols.map(c => Math.max(...WLIST.map(c[2])));
+  const wtbl = `<div class="tbl-wrap"><table><thead><tr><th>${esc(t("wil"))}</th>${cols.map(c=>`<th class="num-c sortable" data-sort="${c[0]}">${esc(c[1])}${sk===c[0]?(sd<0?" ↓":" ↑"):""}</th>`).join("")}</tr></thead><tbody>
+    ${rows.map(w=>`<tr class="rowlink" data-go="wil:${esc(w)}"><td><b style="font-weight:600">${esc(wn(w))}</b></td>${cols.map((c,k)=>{const v=c[2](w);return `<td class="num-c"><span style="display:inline-flex;align-items:center;gap:8px;justify-content:flex-end"><span style="width:44px;height:6px;border-radius:3px;background:var(--track);display:inline-block;overflow:hidden"><span style="display:block;height:100%;width:${maxes[k]?v/maxes[k]*100:0}%;background:var(--s1)"></span></span>${fmt(v)}</span></td>`;}).join("")}</tr>`).join("")}
+    <tr class="grp"><td>${esc(t("all"))}</td>${cols.map(c=>`<td class="num-c">${fmt(sum(WLIST,c[2]))}</td>`).join("")}</tr></tbody></table></div>`;
+  const sel = UI.cmp.map(id=>INST.find(i=>i.id===id)).filter(Boolean);
+  const metrics = [
+    [t("wil"), i=>wn(i.wil), null],[t("type"), i=>t(i.type), null],
+    [t("dom.lab"), i=>chip(...labSt(i)), null,1],[t("dLabStaff"), i=>i.labStaff, i=>i.labStaff],
+    [t("dom.radiology"), i=>chip(...radSt(i)), null,1],[t("dRad"), i=>i.radCur, i=>i.radCur],[t("dNeed"), i=>i.radNeed, i=>i.radNeed],[t("dTarget"), i=>i.radTarget, i=>i.radTarget],
+    [t("equip"), i=>chip(...eqSt(i)), null,1],[t("dMonthly"), i=>i.R?fmt(Math.round(i.R.monthly)):"—", i=>i.R?i.R.monthly:0],[t("dHours"), i=>i.R?i.R.hours:"—", i=>i.R?i.R.hours:0],
+    [t("dom.general"), ()=>chip(...awaitSt()), null,1],[t("dom.dental"), ()=>chip(...awaitSt()), null,1],[t("dom.mental"), ()=>chip(...awaitSt()), null,1]
+  ];
+  const itbl = sel.length ? `<div class="tbl-wrap"><table><thead><tr><th>${esc(t("metric"))}</th>${sel.map(i=>`<th><span style="display:flex;align-items:center;gap:8px;justify-content:space-between"><a href="#inst-${i.id}" style="color:var(--ink);text-decoration:none;font-size:13px">${esc(nm(i))}</a><button type="button" class="badge" data-rm="${i.id}" aria-label="Remove" style="cursor:pointer">✕</button></span></th>`).join("")}</tr></thead><tbody>
+    ${metrics.map(m => { const mx = m[2] ? Math.max(1,...sel.map(m[2])) : 0;
+      return `<tr><td style="color:var(--muted)">${esc(m[0])}</td>${sel.map(i=>{ const v = m[1](i);
+        const bar = m[2] ? `<span style="display:block;height:5px;border-radius:3px;background:var(--track);margin-top:6px;max-width:140px"><span style="display:block;height:100%;border-radius:3px;width:${m[2](i)/mx*100}%;background:var(--s1)"></span></span>` : "";
+        return `<td>${m[3]?v:esc(v)}${bar}</td>`; }).join("")}</tr>`; }).join("")}</tbody></table></div>` : `<div class="empty">${esc(t("addInst"))}</div>`;
+  const opts = INST.filter(i=>!UI.cmp.includes(i.id)).sort((a,b)=>nm(a).localeCompare(nm(b), LANG)).map(i=>`<option value="${i.id}">${esc(nm(i))} — ${esc(wn(i.wil))}</option>`).join("");
+  return head(t("cmpEyebrow"), t("cmpTitle"), t("cmpSub")) +
+    box(t("cmpWil"), "", wtbl, "", "Geographic list; lab staff list; radiology template") + `<div style="height:16px"></div>` +
+    box(t("cmpInst"), t("maxFour"), `<div class="controls"><select class="select" id="addc" ${UI.cmp.length>=4?"disabled":""} style="min-width:260px"><option value="">${esc(t("addInst"))}</option>${opts}</select></div>${itbl}`);
+};
+
+/* ---------- gaps ---------- */
+VIEWS.gaps = () => {
+  const noLab = INST.filter(i=>i.labStatus==="none"||i.labStatus==="plan");
+  const short = INST.filter(i=>i.radNeed>0).sort((a,b)=>b.radNeed-a.radNeed);
+  const old = INST.filter(i=>i.R && (i.condemned || i.oldest>=10)).sort((a,b)=>b.oldest-a.oldest);
+  const pipe = [...INST.filter(i=>i.labStatus==="plan").map(i=>[i,"lab",t("stLabPlan")]), ...INST.filter(i=>i.radNote).map(i=>[i,"radiology",t("note_"+i.radNote)])];
+  const list = INST.filter(i=>!UI.gapWil || i.wil===UI.gapWil);
+  const cols = ["lab","radiology","equip","general","dental","mental"];
+  const colName = c => c==="equip" ? t("equip") : t("dom."+c);
+  const cell = (i,c) => chip(...(c==="equip"?eqSt(i):domainSt(i,c)));
+  const groups = WLIST.filter(w=>list.some(i=>i.wil===w));
+  const matrix = `<div class="tbl-wrap" style="max-height:640px"><table><thead><tr><th>${esc(t("colInst"))}</th>${cols.map(c=>`<th>${esc(colName(c))}</th>`).join("")}</tr></thead><tbody>
+    ${groups.map(w=>`<tr class="grp"><td colspan="${cols.length+1}">${esc(wn(w))} · ${byWil(w).length}</td></tr>` + list.filter(i=>i.wil===w).map(i=>`<tr class="rowlink" data-inst="${i.id}"><td><span style="font-weight:500">${esc(nm(i))}</span> <span class="badge">${esc(t(i.type))}</span></td>${cols.map(c=>`<td>${cell(i,c)}</td>`).join("")}</tr>`).join("")).join("")}</tbody></table></div>`;
+  const lg = `<div class="legend" style="gap:8px">${[["good","lgGood"],["warn","lgWarn"],["serious","lgSerious"],["crit","lgCrit"],["info","lgInfo"],["none","lgNone"]].map(([k,l])=>chip(k,t(l))).join("")}</div>`;
+  return head(t("gapEyebrow"), t("gapTitle"), t("gapSub")) +
+  `<div class="grid g-4">
+    ${kpi(t("gNoLab"), noLab.length, t("gNoLabS",{t:TOT.inst,p:TOT.labPlan}))}
+    ${kpi(t("gVisit"), TOT.labVisit, INST.filter(i=>i.labStatus==="visit").map(nm).map(esc).join(" · "))}
+    ${kpi(t("gShort"), TOT.radNeed, `${short.length} ${esc(t("colInst"))}`)}
+    ${kpi(t("gOld"), old.length, old.map(nm).map(esc).join(" · "))}
+  </div>
+  <div class="grid g-12" style="margin-top:16px">
+    ${box(t("gShortT"), t("gShortS"), bars(short.map(i=>({label:nm(i), href:"inst:"+i.id, segs:[{v:i.radNeed,c:"var(--s2)"}], tip:`<b>${esc(nm(i))}</b><br>${esc(t("inPost"))}: ${i.radCur}<br>${esc(t("needNext"))}: +${i.radNeed}`}))), "span-5", "Radiographers Feb 2026 / Aug 2025")}
+    ${box(t("gEqT"), t("gEqS"), `<div class="tbl-wrap"><table><tbody>${old.map(i=>i.R.equip.filter(e=>e.status==="condemn"||e.age>=10).map(e=>`<tr class="rowlink" data-inst="${i.id}"><td>${esc(nm(i))}<div class="sub">${esc(e.vendor)} · ${esc(e.model)}</div></td><td class="num-c">${e.year}</td><td>${e.status==="condemn"?chip("crit",t("stEqCond")):chip("warn",t("stEqOld",{a:e.age}))}</td></tr>`).join("")).join("")}</tbody></table></div>`, "span-7", "Radiology template — equipment inventory")}
+    ${box(t("gPipeT"), t("gPipeS"), `<div class="tbl-wrap"><table><tbody>${pipe.map(([i,d,l])=>`<tr class="rowlink" data-inst="${i.id}"><td>${esc(nm(i))}<div class="sub">${esc(wn(i.wil))}</div></td><td><span style="display:inline-flex;align-items:center;gap:6px"><svg width="16" height="16" aria-hidden="true" style="color:var(--accent)"><use href="#${DOM_ICON[d]}"/></svg>${esc(t("dom."+d))}</span></td><td>${chip("info",l)}</td></tr>`).join("")}</tbody></table></div>`, "span-12")}
+  </div>
+  <div style="height:16px"></div>
+  ${box(t("matrixT"), "", `<div class="controls" style="margin-bottom:12px">${wilSelect(UI.gapWil,'id="gwil"')}</div>${lg}<div style="height:14px"></div>${matrix}`)}`;
+};
+
+/* ---------- lab ---------- */
+VIEWS.lab = () => {
+  const list = INST.filter(i=>!UI.labWil || i.wil===UI.labWil);
+  const staffed = list.filter(i=>i.labStatus==="active").sort((a,b)=>b.labStaff-a.labStaff || nm(a).localeCompare(nm(b)));
+  const rows = staffed.map(i=>({label:nm(i), href:"inst:"+i.id, segs:[{v:i.labStaff,c:"var(--s1)"}], tip:`<b>${esc(nm(i))}</b><br>${esc(wn(i.wil))}<br>${esc(t("dLabStaff"))}: ${i.labStaff}`}));
+  const cov = WLIST.map(w=>{ const l=byWil(w), a=l.filter(i=>i.labStatus==="active").length, v=l.filter(i=>i.labStatus==="visit").length, p=l.filter(i=>i.labStatus==="plan").length;
+    return {label:wn(w), href:"wil:"+w, segs:[{v:a,c:"var(--s1)"},{v:v,c:"var(--s4)"},{v:p,c:"var(--q250)"},{v:l.length-a-v-p,c:"var(--track)"}], vLabel:`${Math.round(a/l.length*100)}%`,
+      tip:`<b>${esc(wn(w))}</b><br>${esc(t("lActive"))}: ${a}<br>${esc(t("lVisit"))}: ${v}<br>${esc(t("lPlan"))}: ${p}<br>${esc(t("lNone"))}: ${l.length-a-v-p}`}; });
+  const lst = (st) => INST.filter(i=>i.labStatus===st && (!UI.labWil||i.wil===UI.labWil)).map(i=>`<button type="button" class="chip st-${st==="plan"?"info":st==="visit"?"warn":"none"}" data-inst="${i.id}" style="border:0;cursor:pointer"><svg aria-hidden="true"><use href="#${st==="plan"?"i-info":st==="visit"?"i-warn":"i-dash"}"/></svg>${esc(nm(i))}</button>`).join(" ") || "—";
+  return head(t("labEyebrow"), t("labTitle"), t("labSub"), wilSelect(UI.labWil, 'id="lwil"')) +
+  `<div class="grid g-4">
+    ${kpi(t("kLab"), sum(list,i=>i.labStaff), "")}
+    ${kpi(t("lActive"), staffed.length, `/ ${list.length}`)}
+    ${kpi(t("lVisit"), list.filter(i=>i.labStatus==="visit").length, "")}
+    ${kpi(t("lPlan"), list.filter(i=>i.labStatus==="plan").length, "")}
+  </div>
+  <div class="grid g-12" style="margin-top:16px">
+    ${box(t("lBarT"), t("lBarS"), bars(rows), "span-7", "Laboratory staff list")}
+    <div class="span-5 grid" style="align-content:start">
+      ${box(t("lWilT"), t("lWilS"), legend([["var(--s1)",t("lActive")],["var(--s4)",t("lVisit")],["var(--q250)",t("lPlan")],["var(--track)",t("lNone")]]) + `<div style="height:12px"></div>` + bars(cov))}
+      ${box(t("lPlan"), "", lst("plan"))}
+      ${box(t("lVisit"), "", lst("visit"))}
+      ${box(t("lNone"), "", lst("none"))}
+    </div>
+  </div>`;
+};
+
+/* ---------- radiology ---------- */
+VIEWS.radiology = () => {
+  const plan = INST.filter(i=>i.radTarget>0).sort((a,b)=>b.radTarget-a.radTarget);
+  const planRows = plan.map(i=>{ const r = i.r25 || [i.radCur,i.radNeed,0,0];
+    return {label:nm(i), href:"inst:"+i.id, segs:[{v:r[0],c:"var(--q700)"},{v:r[1],c:"var(--q550)"},{v:r[2],c:"var(--q400)"},{v:r[3],c:"var(--q250)"}], vLabel:`${i.radTarget}`,
+      tip:`<b>${esc(nm(i))}</b><br>${esc(t("cur"))}: ${r[0]}<br>${esc(t("p1"))}: +${r[1]}<br>${esc(t("p2"))}: +${r[2]}<br>${esc(t("p3"))}: +${r[3]}<br>${esc(t("dTarget"))}: ${i.radTarget}`}; });
+  const tr = INST.filter(i=>i.r25 && i.r26).sort((a,b)=>(b.r26[0]-b.r25[0])-(a.r26[0]-a.r25[0]) || b.r26[0]-a.r26[0]);
+  const tmax = Math.max(...tr.map(i=>Math.max(i.r25[0],i.r26[0])), 1);
+  const trend = `<div class="bars">${tr.map(i=>{ const a=i.r25[0], b=i.r26[0], lo=Math.min(a,b), hi=Math.max(a,b);
+    const d = b-a; const dl = d===0?"=":(d>0?`+${d}`:`${d}`);
+    return `<div class="bar-row clickable" data-go="inst:${i.id}" data-tip="${esc(`<b>${esc(nm(i))}</b><br>Aug 2025: ${a}<br>Feb 2026: ${b}`)}"><span class="bl">${esc(nm(i))}</span>
+      <span class="dumb"><span class="ln" style="inset-inline-start:${lo/tmax*100}%;width:${(hi-lo)/tmax*100}%"></span><span class="pt" style="inset-inline-start:${a/tmax*100}%;background:var(--surface);border:2px solid var(--muted)"></span><span class="pt" style="inset-inline-start:${b/tmax*100}%;background:var(--s1)"></span></span>
+      <span class="bv" style="color:${d<0?"var(--crit)":"var(--ink)"}">${dl}</span></div>`; }).join("")}</div>`;
+  const R = INST.filter(i=>i.R);
+  const vol = R.slice().sort((a,b)=>b.R.monthly-a.R.monthly).map(i=>({label:nm(i), href:"inst:"+i.id, segs:[{v:Math.round(i.R.monthly),c:"var(--s1)"}], tip:`<b>${esc(nm(i))}</b><br>${esc(t("dExams"))}: ${fmt(i.R.xr)} (${i.R.months} mo)<br>${esc(t("dMonthly"))}: ${fmt(Math.round(i.R.monthly))}${i.R.ct?`<br>CT: ${fmt(i.R.ct)}`:""}`}));
+  const per = R.filter(i=>i.radCur>0).map(i=>({i, v:i.R.monthly/i.radCur})).sort((a,b)=>b.v-a.v).map(({i,v})=>({label:nm(i), href:"inst:"+i.id, segs:[{v:Math.round(v),c:"var(--s3)"}], tip:`<b>${esc(nm(i))}</b><br>${fmt(Math.round(i.R.monthly))} ÷ ${i.radCur} = ${fmt(Math.round(v))}`}));
+  const eq = R.flatMap(i=>i.R.equip.map(e=>({i,e}))).sort((a,b)=>a.e.year-b.e.year);
+  const eqT = `<div class="tbl-wrap" style="max-height:460px"><table><thead><tr><th>${esc(t("colInst"))}</th><th>${esc(t("type"))}</th><th>${esc(t("vendorModel"))}</th><th class="num-c">${esc(t("installed"))}</th><th>${esc(t("age"))}</th><th>${esc(t("status"))}</th></tr></thead><tbody>
+    ${eq.map(({i,e})=>`<tr class="rowlink" data-inst="${i.id}"><td>${esc(nm(i))}</td><td>${esc(t("eqType."+e.type))}</td><td>${esc(e.vendor)} · ${esc(e.model)}</td><td class="num-c">${e.year}</td>
+      <td><span style="display:inline-flex;align-items:center;gap:8px"><span style="width:90px;height:6px;border-radius:3px;background:var(--track);overflow:hidden;display:inline-block"><span style="display:block;height:100%;width:${Math.min(e.age/17*100,100)}%;background:${e.status==="condemn"?"var(--crit)":e.age>=10?"var(--warn)":"var(--s1)"}"></span></span>${e.age}</span></td>
+      <td>${e.status==="condemn"?chip("crit",t("stEqCond")):e.age>=10?chip("warn",t("stEqOld",{a:e.age})):chip("good",t("stEqOk",{y:e.year}))}</td></tr>`).join("")}</tbody></table></div>`;
+  const qTot = QUAL.Diploma + QUAL.BSc + QUAL.MSc;
+  const qual = legend([["var(--s1)",`Diploma ${QUAL.Diploma}`],["var(--s2)",`BSc ${QUAL.BSc}`],["var(--s3)",`MSc ${QUAL.MSc}`]]) +
+    `<div style="display:flex;gap:2px;height:22px;margin-top:12px">${[["Diploma","var(--s1)"],["BSc","var(--s2)"],["MSc","var(--s3)"]].map(([k,c])=>`<span data-tip="<b>${k}</b><br>${QUAL[k]} (${Math.round(QUAL[k]/qTot*100)}%)" style="width:${QUAL[k]/qTot*100}%;background:${c};border-radius:4px"></span>`).join("")}</div>`;
+  const hours = R.slice().sort((a,b)=>b.R.hours-a.R.hours).map(i=>({label:nm(i), href:"inst:"+i.id, segs:[{v:i.R.hours,c:"var(--q550)"}], tip:`<b>${esc(nm(i))}</b><br>${i.R.hours} h / week<br>PACS: ${esc(i.R.pacs)} · ${i.R.tb} TB`}));
+  const tpl = `<div class="bars">${TEMPLATE_SECTIONS.map(([s,v])=>`<div class="bar-row" style="grid-template-columns:minmax(140px,200px) 1fr auto"><span class="bl">${esc(LANG==="ar"?TPL_AR[s]:s)}</span><span class="bar-track"><span class="seg" style="width:${Math.max(v*100,1)}%;background:${v===1?"var(--good)":v>0?"var(--warn)":"var(--line-2)"}"></span></span><span>${v===1?chip("good",t("filled")):v>0?chip("warn",t("partial")):chip("none",t("empty"))}</span></div>`).join("")}</div>`;
+  return head(t("radEyebrow"), t("radTitle"), t("radSub")) +
+  `<div class="grid g-4">
+    ${kpi(t("rCur"), TOT.radCur, t("kRadS",{n:TOT.radNeed}))}
+    ${kpi(t("rTarget"), TOT.radTarget, "")}
+    ${kpi(t("kExam"), fmt(TOT.exams), "")}
+    ${kpi(t("rUnits"), TOT.xrayRooms+TOT.mobile+TOT.ct, t("rUnitsS",{x:TOT.xrayRooms,m:TOT.mobile,c:TOT.ct}))}
+  </div>
+  <div class="grid g-12" style="margin-top:16px">
+    ${box(t("rPlanT"), t("rPlanS"), legend([["var(--q700)",t("cur")],["var(--q550)",t("p1")],["var(--q400)",t("p2")],["var(--q250)",t("p3")]]) + `<div style="height:12px"></div>` + bars(planRows), "span-7", "Radiographers & 3-phase need, Aug 2025")}
+    ${box(t("rTrendT"), t("rTrendS"), `<div class="legend"><span><i class="ring"></i>Aug 2025</span><span><i style="background:var(--s1);border-radius:50%"></i>Feb 2026</span></div><div style="height:12px"></div>` + trend, "span-5", "Aug 2025 & Feb 2026 lists")}
+    ${box(t("rVolT"), t("rVolS"), bars(vol), "span-6", "Radiology template — exam volume")}
+    ${box(t("rPerT"), t("rPerS"), bars(per), "span-6", "Exam volume ÷ radiographers")}
+    ${box(t("rEqT"), t("rEqS"), eqT, "span-12", "Radiology template — equipment inventory")}
+    ${box(t("rHoursT"), t("rHoursS"), bars(hours), "span-6", "Radiology template — facility overview")}
+    <div class="span-6 grid" style="align-content:start">
+      ${box(t("rQualT"), t("rQualS"), qual, "", "Radiology template — workforce (aggregated)")}
+      ${box(t("rTplT"), t("rTplS"), tpl)}
+    </div>
+  </div>`;
+};
+
+const TPL_AR = {"Facility Overview":"نظرة عامة على المنشأة","Workforce":"القوى العاملة","Equipment Inventory":"سجل الأجهزة","Exam Volume":"حجم الفحوصات","PACS & Archive":"PACS والأرشيف","Digital Maturity":"النضج الرقمي","Turnaround Time":"زمن إنجاز التقارير","Reporting & Workflow":"التقارير وسير العمل","Quality & Audit":"الجودة والتدقيق","Demand & Coverage":"الطلب والتغطية","Readiness & Training":"الجاهزية والتدريب","Clinical Effectiveness":"الفعالية السريرية","Equity & Access":"العدالة والوصول","Cost & Utilization":"التكلفة والاستخدام","Accreditation & Risk":"الاعتماد والمخاطر","Upcoming Projects":"المشاريع القادمة"};
+/* ---------- audits ---------- */
+VIEWS.audits = () => {
+  const cards = AUDITS.map(a=>`<a class="box acard fade-in" href="${a.url}" target="_blank" rel="noopener"><span class="ic"><svg aria-hidden="true"><use href="#${DOM_ICON[a.key]}"/></svg></span><h3>${esc(t("dom."+a.key))}</h3><p>${esc(t("aDesc."+a.key))}</p><span class="go">${esc(t("aOpen"))} <svg width="14" height="14" aria-hidden="true"><use href="#i-ext"/></svg></span></a>`).join("");
+  return head(t("audEyebrow"), t("audTitle"), t("audSub")) +
+  `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">${cards}</div>`;
+};
+
+/* ---------- data notes ---------- */
+VIEWS.data = () => head(t("datEyebrow"), t("datTitle"), "") +
+  `<div class="grid g-2">
+    ${box(t("sources"), "", `<div class="tbl-wrap"><table><tbody>${t("srcList").map(([a,b])=>`<tr><td style="white-space:normal">${esc(a)}</td><td style="white-space:normal;color:var(--muted)">${esc(b)}</td></tr>`).join("")}</tbody></table></div>`)}
+    <div class="grid" style="align-content:start">
+      ${box(t("deid"), "", `<p class="note"><svg aria-hidden="true"><use href="#i-check"/></svg>${esc(t("deidTxt"))}</p>`)}
+      ${box(t("caveats"), "", `<ul style="padding-inline-start:18px;display:grid;gap:8px;font-size:13.5px;color:var(--ink-2);line-height:1.55">${t("cav").map(c=>`<li>${esc(c)}</li>`).join("")}</ul>`)}
+    </div>
+  </div>`;
+
+/* ===================== router & chrome ===================== */
+const ROUTES = ["overview","institutions","compare","gaps","lab","radiology","audits","data"];
+let ROUTE = null;
+function applyStatic(){
+  $$("[data-i]").forEach(el => { const v = t(el.dataset.i); if (typeof v === "string") el.innerHTML = v; });
+  $("#tabs").innerHTML = ROUTES.map(r=>`<a href="#${r}"${ROUTE===r?' aria-current="page"':""}>${esc(t("tabs."+r))}</a>`).join("");
+  const dark = document.documentElement.getAttribute("data-theme") === "dark";
+  $$(".js-theme use").forEach(u => u.setAttribute("href", dark ? "#i-sun" : "#i-moon"));
+  $$(".js-lang").forEach(b => b.setAttribute("aria-label", LANG==="ar" ? "Switch to English" : "التبديل إلى العربية"));
+  document.title = LANG === "ar" ? "خدمات ظفار الصحية" : "Dhofar Health Services";
+  $("#heroN1").textContent = TOT.inst; $("#heroN2").textContent = TOT.labStaff;
+  $("#heroTrack").style.setProperty("--fill", ((TOT.labActive+TOT.labVisit)/TOT.inst*100).toFixed(1)+"%");
+  const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = dark ? "#081020" : "#E6EDF6";
+}
+function bindView(){
+  if (ROUTE === "institutions"){
+    renderCards();
+    $("#q").addEventListener("input", e => { UI.q = e.target.value; renderCards(); });
+    $("#fwil").addEventListener("change", e => { UI.wil = e.target.value; renderCards(); });
+    $("#fsvc").addEventListener("change", e => { UI.svc = e.target.value; renderCards(); });
+  }
+  if (ROUTE === "compare"){ const a = $("#addc"); a && a.addEventListener("change", e => { if (e.target.value && UI.cmp.length < 4){ UI.cmp.push(e.target.value); render(); } }); }
+  if (ROUTE === "gaps") $("#gwil").addEventListener("change", e => { UI.gapWil = e.target.value; render(); });
+  if (ROUTE === "lab") $("#lwil").addEventListener("change", e => { UI.labWil = e.target.value; render(); });
+}
+function render(){
+  const h = (location.hash || "").replace("#","");
+  const isHome = !h || h === "home";
+  document.body.classList.toggle("is-home", isHome);
+  let instId = null, r = h;
+  if (h.startsWith("inst-")){ instId = h.slice(5); r = "institutions"; }
+  if (!isHome && !ROUTES.includes(r)) r = "overview";
+  const changed = ROUTE !== (isHome ? "home" : r);
+  ROUTE = isHome ? "home" : r;
+  applyStatic();
+  if (!isHome){
+    const y = changed ? 0 : window.scrollY;
+    $("#view").innerHTML = VIEWS[r]();
+    bindView();
+    if (changed) window.scrollTo(0, 0); else window.scrollTo(0, y);
+  }
+  if (instId) openInst(instId); else if (changed) closeModal();
+  else { const m = $("#modal"); if (m.hasAttribute("open")) { const i = INST.find(x=>x.id===m.dataset.inst); i && renderSheet(i); } }
+}
+function go(target){
+  if (target.startsWith("wil:")){ UI.wil = target.slice(4); UI.q = ""; UI.type = ""; UI.svc = ""; if (location.hash === "#institutions") render(); else location.hash = "institutions"; }
+  else if (target.startsWith("inst:")) openInst(target.slice(5));
+}
+let toastT;
+function toast(msg){ const el = $("#toast"); el.textContent = msg; el.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove("on"), 2200); }
+
+/* global events */
+document.addEventListener("click", e => {
+  const T_ = e.target;
+  const th = T_.closest(".js-theme");
+  if (th){ const d = document.documentElement; const nx = d.getAttribute("data-theme") === "dark" ? "light" : "dark"; d.setAttribute("data-theme", nx); store.set("dha-theme", nx); try{localStorage.setItem("dha-theme", nx)}catch(_){} applyStatic(); return; }
+  const lg = T_.closest(".js-lang");
+  if (lg){ LANG = LANG === "ar" ? "en" : "ar"; const d = document.documentElement; d.lang = LANG; d.dir = LANG === "ar" ? "rtl" : "ltr"; try{localStorage.setItem("dha-lang", LANG)}catch(_){} render(); return; }
+  if (T_.closest("[data-close]")){ closeModal(); return; }
+  const dt = T_.closest("[data-dtab]");
+  if (dt){ DETAIL_TAB = dt.dataset.dtab; const i = INST.find(x=>x.id===$("#modal").dataset.inst); i && renderSheet(i); return; }
+  const ic = T_.closest("[data-inst]");
+  if (ic){ openInst(ic.dataset.inst); return; }
+  const g = T_.closest("[data-go]");
+  if (g){ go(g.dataset.go); return; }
+  const bub = T_.closest(".bub");
+  if (bub){ go("wil:" + bub.dataset.wil); return; }
+  const sg = T_.closest("[data-seg]");
+  if (sg){ const k = sg.dataset.seg, v = sg.dataset.v;
+    if (k === "type"){ UI.type = v; $$('[data-seg="type"]').forEach(b=>b.setAttribute("aria-pressed", b.dataset.v===v)); renderCards(); }
+    return; }
+  const so = T_.closest("[data-sort]");
+  if (so){ const k = so.dataset.sort; UI.cmpSort = UI.cmpSort[0] === k ? [k, -UI.cmpSort[1]] : [k, -1]; render(); return; }
+  const rm = T_.closest("[data-rm]");
+  if (rm){ UI.cmp = UI.cmp.filter(x=>x!==rm.dataset.rm); render(); return; }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeModal();
+  if ((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("bub")){ e.preventDefault(); go("wil:" + e.target.dataset.wil); }
+});
+/* tooltip */
+const tip = $("#tip");
+document.addEventListener("mousemove", e => {
+  const el = e.target.closest && e.target.closest("[data-tip]");
+  if (!el){ tip.classList.remove("on"); return; }
+  tip.innerHTML = el.dataset.tip; tip.classList.add("on");
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + w > innerWidth - 8) x = e.clientX - w - 14;
+  if (y + h > innerHeight - 8) y = e.clientY - h - 14;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+});
+document.addEventListener("scroll", () => tip.classList.remove("on"), { passive:true });
+window.addEventListener("hashchange", render);
+render();
+
+/* ===================== hero motion & menu ===================== */
+(function(){
+  const d = document.documentElement; if (!d.classList.contains("pre")) return;
+  const EXPO = "cubic-bezier(.16,1,.3,1)", SOFT = "cubic-bezier(.22,.7,.25,1)", GLASS = "cubic-bezier(.2,.75,.28,1)";
+  const s = matchMedia("(max-width: 640px)").matches ? .86 : 1, running = [];
+  const q = x => typeof x === "string" ? $(".hero " + x) : x;
+  const an = (el, kf, dur, delay, easing) => { el = q(el); if (!el) return; running.push(el.animate(kf, { duration:dur*s, delay:delay*s, easing, fill:"both" })); };
+  const rise = (el, delay, dur) => an(el, [{clipPath:"inset(100% 0 -14% 0)",translate:"0 .16em"},{clipPath:"inset(-18% 0 -14% 0)",translate:"0 0"}], dur, delay, EXPO);
+  const lift = (el, delay, dist=".7em", dur=560) => an(el, [{opacity:0,translate:"0 "+dist},{opacity:1,translate:"0 0"}], dur, delay, SOFT);
+  const settle = (el, delay, dur=760, from=.985, dist="1.1em") => an(el, [{opacity:0,scale:from,translate:"0 "+dist},{opacity:1,scale:1,translate:"0 0"}], dur, delay, GLASS);
+  an(".stage", [{opacity:0,scale:.96},{opacity:1,scale:1}], 1400, 0, EXPO);
+  lift(".brand",60,".55em",600); settle(".nav",150,700,.99,".5em"); settle(".cta",200,700,.985,".5em"); settle(".toggles",180,700,.96,".5em"); settle(".burger",150,700,.9,".4em");
+  lift(".eyebrow",300,".8em",520);
+  const hs = $$(".hero h1 .sx"); rise(hs[0],380,980); rise(hs[1],470,980);
+  settle(".play",720,640,.88,".3em"); lift(".tag",770,".7em",560); settle(".panel",800,880,.982,"1.4em");
+  an(".shield",[{scale:.86},{scale:1}],700,1020,EXPO); an(".dot",[{scale:0},{scale:1}],520,1080,EXPO); an(".track i",[{scale:"0 1"},{scale:"1 1"}],820,1120,EXPO);
+  const ns = $$(".hero .num"), ls = $$(".hero .lbl"); rise(ns[0],920,860); rise(ns[1],990,860); lift(ls[0],1030,".6em",520); lift(ls[1],1075,".6em",520);
+  an(".slash",[{scale:"1 0"},{scale:"1 1"}],700,1010,EXPO); settle(".meet",1140,820,.985,"1.2em");
+  Promise.all(running.map(a=>a.finished.catch(()=>{}))).then(()=>{ d.classList.remove("pre"); running.forEach(a=>a.cancel()); running.length = 0; });
+})();
+(function(){
+  const btn = $(".hero .burger"), menu = $("#site-menu"); if (!btn || !menu) return;
+  const set = o => { btn.setAttribute("aria-expanded", String(o)); o ? menu.setAttribute("data-open","") : menu.removeAttribute("data-open"); };
+  btn.addEventListener("click", e => { e.stopPropagation(); set(btn.getAttribute("aria-expanded") !== "true"); });
+  menu.addEventListener("click", e => { if (e.target.closest("a")) set(false); });
+  document.addEventListener("click", e => { if (!btn.contains(e.target) && !menu.contains(e.target)) set(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && btn.getAttribute("aria-expanded") === "true"){ set(false); btn.focus(); } });
+  matchMedia("(min-aspect-ratio: 1/1)").addEventListener("change", m => { if (m.matches) set(false); });
+})();
+})();
+
+/* background video: show it when it can play; otherwise the glass-sphere fallback stays */
+(() => {
+  const $ = s => document.querySelector(s); const v = $("#bgv"), card = $("#herocard"); if (!v || !card) return;
+  const q = matchMedia("(prefers-reduced-motion: reduce)");
+  const on = () => card.classList.add("has-video");
+  const sync = () => { if (q.matches){ v.pause(); v.currentTime = 0; } else v.play().catch(() => {}); };
+  v.addEventListener("loadeddata", on);
+  v.addEventListener("playing", on);
+  v.addEventListener("error", () => card.classList.remove("has-video"));
+  q.addEventListener("change", sync);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) sync(); });
+  v.addEventListener("canplay", sync); sync();
+  if (v.readyState >= 2) on();
+})();
+</script>
+</body>
+</html>
