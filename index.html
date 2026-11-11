@@ -186,7 +186,7 @@ body.is-home #app{display:none}
 .track i{display:block;width:var(--fill,50%);height:100%;border-radius:999px;background:var(--track-fill);transform-origin:left center}
 [dir="rtl"] .track i{transform-origin:right center}
 
-.num{font-size:calc(100*var(--u));font-weight:200;line-height:1;color:var(--ink);white-space:nowrap;font-family:"Inter",sans-serif;font-variant-numeric:tabular-nums}
+.num{font-size:calc(80*var(--u));font-weight:200;line-height:1;color:var(--ink);white-space:nowrap;font-family:"Inter",sans-serif;font-variant-numeric:tabular-nums}
 .lbl{font-size:calc(19*var(--u));font-weight:400;letter-spacing:-0.02em;line-height:calc(23.5*var(--u));color:var(--ink-2)}
 [lang="ar"] .lbl{letter-spacing:0}
 .slash{width:calc(23*var(--u));height:calc(75*var(--u));
@@ -210,6 +210,15 @@ body.is-home #app{display:none}
 }
 a:focus-visible,button:focus-visible{outline:2px solid #2f5f9e;outline-offset:3px}
 
+/* narrower desktop windows (narrower than about 16:10): stack each stat label under its number so the row clears the CTA */
+@media (min-aspect-ratio: 88/80) and (max-aspect-ratio: 79/50) and (min-width: 900px) and (min-height: 640px){
+  #heroN1{--x:64!important;--y:76.5!important} .lbl[data-i="heroL1"]{--x:64!important;--y:0!important}
+  #heroN2{--x:252!important;--y:76.5!important} .lbl[data-i="heroL2"]{--x:252!important;--y:0!important}
+  #heroN3{--x:548!important;--y:76.5!important} .lbl[data-i="heroL3"]{--x:548!important;--y:0!important}
+  .stats .slash:nth-of-type(1){--x:206!important;--y:62!important}
+  .stats .slash:nth-of-type(2){--x:496!important;--y:62!important}
+}
+
 /* ---- compact tier ---- */
 @media (max-aspect-ratio: 87/80), (max-width: 899px), (max-height: 639px){
   :root{--u: min(100vw / 880, 100vh / 1220); --pad: 52}
@@ -219,8 +228,8 @@ a:focus-visible,button:focus-visible{outline:2px solid #2f5f9e;outline-offset:3p
   .row{align-items:center;justify-content:space-between;width:100%;gap:calc(14*var(--u))}
   .hero-blk{flex-direction:column;align-items:flex-start;width:100%;margin:calc(30*var(--u)) 0}
   .tagrow{align-items:center;gap:calc(16*var(--u));margin-top:calc(28*var(--u))}
-  .stats{align-items:flex-end;gap:calc(26*var(--u));flex-wrap:wrap}
-  .stat{align-items:flex-end;gap:calc(16*var(--u))}
+  .stats{display:grid;grid-template-columns:repeat(5,auto);align-items:center;justify-content:start;gap:calc(24*var(--u))}
+  .stat{flex-direction:column;align-items:flex-start;gap:calc(8*var(--u))}
   .l,.t,.c,.b,.r{position:relative;inset:auto}
   .hero h1{margin-top:calc(16*var(--u))}
   .play{flex:none}
@@ -263,11 +272,11 @@ a:focus-visible,button:focus-visible{outline:2px solid #2f5f9e;outline-offset:3p
     .p-sub{inset-inline-start:calc(31*var(--t));top:calc(72*var(--t));font-size:calc(15*var(--t));line-height:calc(19*var(--t))}
     .scale{inset-inline-start:calc(31*var(--t));top:calc(150*var(--t));width:calc(100% - 62*var(--t));font-size:calc(13*var(--t))}
     .track{inset-inline-start:calc(31*var(--t));top:calc(178*var(--t));width:calc(100% - 62*var(--t));height:calc(8*var(--t))}
-    .stats{gap:calc(18*var(--u));align-items:center;flex-wrap:nowrap}
+    .stats{display:grid;grid-template-columns:auto auto auto auto auto;justify-content:space-between;align-items:center;gap:calc(6*var(--u));width:100%}
     .stat{flex-direction:column;align-items:flex-start;gap:calc(6*var(--t))}
-    .num{font-size:calc(76*var(--u))}
+    .num{font-size:calc(52*var(--u))}
     .lbl{font-size:calc(14*var(--t));line-height:calc(18*var(--t))}
-    .slash{height:calc(92*var(--t));width:calc(29*var(--t));align-self:center}
+    .slash{height:calc(72*var(--t));width:calc(20*var(--t));align-self:center}
     .meet{width:100%;height:calc(72*var(--t))}
     .thumb{inset-inline-start:calc(9*var(--t));top:calc(5*var(--t));width:calc(62*var(--t));height:calc(62*var(--t))}
     .meet b{inset-inline-start:calc(84*var(--t));font-size:calc(17*var(--t))}
@@ -605,13 +614,18 @@ footer .in{max-width:1320px;margin:0 auto;padding:18px 24px;display:flex;gap:16p
       <div class="row">
         <div class="stats">
           <div class="stat">
-            <span class="num l b sx" style="--x:64;--y:60.4" id="heroN1">43</span>
-            <span class="lbl l b sx" style="--x:250;--y:73.2" data-i="heroL1"></span>
+            <span class="num l b sx" style="--x:64;--y:60.4" id="heroN1">46</span>
+            <span class="lbl l b sx" style="--x:174;--y:73.2" data-i="heroL1"></span>
           </div>
-          <span class="slash l b" style="--x:418;--y:76"></span>
+          <span class="slash l b" style="--x:312;--y:76"></span>
           <div class="stat">
-            <span class="num l b sx" style="--x:480;--y:60.4" id="heroN2">64</span>
-            <span class="lbl l b sx" style="--x:650;--y:73.2" data-i="heroL2"></span>
+            <span class="num l b sx" style="--x:358;--y:60.4" id="heroN2">3,269</span>
+            <span class="lbl l b sx" style="--x:592;--y:73.2" data-i="heroL2"></span>
+          </div>
+          <span class="slash l b" style="--x:742;--y:76"></span>
+          <div class="stat">
+            <span class="num l b sx" style="--x:788;--y:60.4" id="heroN3">541K</span>
+            <span class="lbl l b sx" style="--x:1004;--y:73.2" data-i="heroL3"></span>
           </div>
         </div>
         <a class="meet l b r" style="--x:59;--y:66" href="#gaps"><span class="thumb"></span><b data-i="meetLbl"></b><i class="knob"><svg class="flip" aria-hidden="true"><use href="#i-chev"/></svg></i></a>
@@ -650,6 +664,8 @@ footer .in{max-width:1320px;margin:0 auto;padding:18px 24px;display:flex;gap:16p
    S3  Radiographers current + 3-phase need, Aug 2025 (xlsx)
    S4  Radiographers actual + need, Feb 2026 (xlsx)
    S5  Comprehensive Radiology Data Template — Dhofar (xlsx)
+   S6  MOH Directorate General of Health Services, Dhofar — statistical bulletin H1 2025 (workforce at end Jun 2025)
+   S7  NCSI Monthly Statistical Bulletin, Oct 2026 (registered population at end Sep 2026; e-Census 2020 baseline)
    ===================================================================== */
 
 const WILAYAT = {
@@ -665,7 +681,7 @@ const WILAYAT = {
   "Rakhyut":     { ar: "رخيوت",   x: 53.42, y: 16.74 }
 };
 
-/* lab: n = staff count (S2) | "visit" = part-time visiting service (2 days) | "plan" = new service planned | null = not listed
+/* lab: n = staff count (S2) | "visit" = part-time visiting service (2 days) | "plan" = new service planned | "nodata" = added later, not in the Directorate lab / radiology lists yet | null = not listed
    r25: [current, phase1, phase2, phase3, target]  (S3, Aug 2025)
    r26: [actual, additional need, noteKey]         (S4, Feb 2026)            */
 const INST = [
@@ -696,6 +712,9 @@ const INST = [
  ["gharbia","Salalah Al Gharbia HC","مركز صلالة الغربية الصحي","Salalah","HC",2,[2,0,1,1,4],[2,0]],
  ["taitam","Taitam HC","مركز طيطام الصحي","Salalah","HC","plan",[0,0,0,0,0],null],
  ["saadah","As Saadah HC","مركز السعادة الصحي","Salalah","HC",5,[2,2,1,2,7],[1,3]],
+ ["sqh","Sultan Qaboos Hospital (old)","مستشفى السلطان قابوس (القديم)","Salalah","H","nodata",null,null],
+ ["sqhnew","New Sultan Qaboos Hospital (opening Q4 2026)","مستشفى السلطان قابوس الجديد (يُفتتح الربع الرابع 2026)","Salalah","H","nodata",null,null],
+ ["salpc","Salalah Polyclinic","مجمع صلالة الصحي","Salalah","PC","nodata",null,null],
  ["shuwaymiyah","A' Shuwaymiyah HC","مركز الشويمية الصحي","Shalim","HC",1,[1,0,0,1,2],[1,0]],
  ["sharbthat","Sharbthat HC","مركز شربثات الصحي","Shalim","HC",1,[0,0,0,1,1],null],
  ["kubut","Kubut HC","مركز كوبوت الصحي","Shalim","HC",1,[0,1,0,1,2],[0,1,"upcoming"]],
@@ -740,6 +759,12 @@ const RAD = {
 /* Governorate-level radiographer qualification mix (S5 Workforce, aggregated — no individual rows kept) */
 const QUAL = { Diploma:17, BSc:19, MSc:1 };
 
+/* Governorate headline figures on the landing page and overview */
+/* S6: Ministry of Health medical + allied medical staff in Dhofar, end Jun 2025 (slide total "اجمالي الفئات") */
+const WORKFORCE = { total:3269, asOf:"Jun 2025" };
+/* S7: registered population of Dhofar, end Sep 2026 (census2020 = e-Census count, Dec 2020) */
+const POPULATION = { total:540655, asOf:"Sep 2026", census2020:416458 };
+
 /* Template sections in S5 and whether the Directorate has filled them yet */
 const TEMPLATE_SECTIONS = [
  ["Facility Overview",1],["Workforce",1],["Equipment Inventory",1],["Exam Volume",1],["PACS & Archive",1],
@@ -775,15 +800,17 @@ const T = {
   brand:"Dhofar Health Services", langBtn:"ع", navExplore:"Institutions", navAudits:"Audits", ctaOpen:"Open dashboard",
   heroEyebrow:"Dhofar Governorate · Health services platform", heroH1a:"Every institution.", heroH1b:"One clear view.",
   heroTag:"General · Dental · Lab · Radiology · Mental health", panelTitle:"Laboratory", panelSub:"Service<br>coverage across<br>institutions",
-  heroL1:"Health<br>institutions<br>in 10 wilayats", heroL2:"Laboratory<br>staff<br>in post", meetLbl:"See gaps at a glance",
+  heroL1:"Health<br>institutions<br>in 10 wilayats", heroL2:"Health care<br>employees<br>(MOH, Dhofar)", heroL3:"Residents<br>of Dhofar<br>Sep 2026", meetLbl:"See gaps at a glance",
   footL:"Dhofar Health Services · Compiled from Directorate files · Personal data removed", footR:"Data sources & notes",
   tabs:{overview:"Overview",institutions:"Institutions",compare:"Compare",gaps:"Gaps",lab:"Laboratory",radiology:"Radiology",audits:"Audits",data:"Data notes"},
-  H:"Hospital", HC:"Health centre", Hs:"Hospitals", HCs:"Health centres",
+  H:"Hospital", HC:"Health centre", PC:"Polyclinic", Hs:"Hospitals", HCs:"Health centres", PCs:"Polyclinics",
   dom:{general:"General / GP", dental:"Dental", lab:"Laboratory", radiology:"Radiology", mental:"Mental health"}, domS:{general:"GP", dental:"Dental", lab:"Lab", radiology:"X-ray", mental:"Mental"}, visitS:"Visit",
   all:"All", allWil:"All wilayats", search:"Search institutions…", results:"{n} institutions",
   // overview
   ovEyebrow:"Governorate overview", ovTitle:"Health services in Dhofar", ovSub:"Every health institution across the 10 wilayats, with staffing and equipment for laboratory and radiology, and audit status for general, dental and mental health services.",
-  kInst:"Health institutions", kInstS:"<b>{h}</b> hospitals · <b>{hc}</b> health centres",
+  kInst:"Health institutions", kInstS:"<b>{h}</b> hospitals · <b>{hc}</b> health centres · <b>{p}</b> polyclinic",
+  kStaff:"Health care employees", kStaffS:"<b>MOH</b> medical and allied medical staff · end Jun 2025",
+  kPop:"Population of Dhofar", kPopS:"Registered residents · NCSI · end Sep 2026",
   kLab:"Laboratory staff", kLabS:"<b>{a}</b> staffed labs · <b>{v}</b> visiting · <b>{p}</b> planned",
   kRad:"Radiographers in post", kRadS:"<b>+{n}</b> needed in the next phase",
   kExam:"Imaging exams, 2025 to date", kExamS:"<b>{u}</b> X-ray rooms · <b>1</b> CT scanner",
@@ -799,7 +826,7 @@ const T = {
   stRadOk:"Staffed", stRadShort:"Short {n}", stRadNone:"No X-ray service", stRadPlan:"In phased plan",
   note_approved:"Service approved", note_newproject:"New project under construction", note_ready:"Dept. ready, awaiting radiographers", note_upcoming:"Upcoming project",
   stEqOk:"Installed {y}", stEqOld:"{a} yrs old", stEqCond:"Condemned, still in use", stEqNone:"No equipment",
-  stAwait:"Awaiting audit",
+  stAwait:"Awaiting audit", stData:"Awaiting data",
   // institutions
   insEyebrow:"Directory", insTitle:"Institutions", insSub:"Filter by wilayat, type and service. Open any institution to see all five domains.",
   fAny:"Any service", fLab:"Has lab", fNoLab:"No lab", fXray:"Has X-ray", fGap:"Has a staffing gap",
@@ -857,14 +884,20 @@ const T = {
    "Sarfait HC appears in the Aug 2025 radiology list (no staff, no need) but not in the geographic list, so it is not shown.",
    "Muqshin is listed as a health centre in the geographic list and as a hospital in the radiology template; the geographic list is used.",
    "Hadbin and Sawb receive a part-time visiting laboratory service (two days); they are counted as visiting, not staffed.",
+   "Salalah Polyclinic, Sultan Qaboos Hospital (old) and the new Sultan Qaboos Hospital were added in Nov 2026. The Directorate lab and radiology lists do not cover them yet, so they show “Awaiting data” and are left out of lab and radiology totals and coverage.",
+   "The new Sultan Qaboos Hospital (700 beds) is not operating yet; the Ministry expects it to open in the last quarter of 2026.",
+   "Health care employees (3,269) is the Ministry of Health medical and allied medical workforce in Dhofar at end June 2025 (Dhofar statistical bulletin, H1 2025). It excludes other staff categories and non-MOH sectors.",
+   "Population (540,655) is the NCSI registered population of Dhofar at end September 2026, updated from the 2020 e-Census (416,458 in Dec 2020). It includes expatriate residents.",
    "Wilayat positions on the map are approximate and for orientation only."
   ],
   srcList:[
-   ["Geographic list (wilayat → institution)","43 institutions, 10 wilayats"],
+   ["Geographic list (wilayat → institution)","43 institutions, 10 wilayats, plus 3 added in Salalah (polyclinic, old and new Sultan Qaboos Hospital)"],
    ["Laboratory staff per institution","27 institutions + 3 planned new services"],
    ["Radiographers & 3-phase need, Aug 2025","42 institutions"],
    ["Radiographers & need, Feb 2026","22 institutions"],
    ["Comprehensive Radiology Data Template — Dhofar","18 facilities: overview, workforce, equipment, exam volume, PACS"],
+    ["MOH Dhofar statistical bulletin, H1 2025","Health care employees at end Jun 2025"],
+    ["NCSI Monthly Statistical Bulletin, Oct 2026","Dhofar population at end Sep 2026"],
    
   ],
   srcS:"Source: {s}"
@@ -873,14 +906,16 @@ const T = {
   brand:"خدمات ظفار الصحية", langBtn:"EN", navExplore:"المؤسسات", navAudits:"التدقيق", ctaOpen:"لوحة البيانات",
   heroEyebrow:"محافظة ظفار · منصة الخدمات الصحية", heroH1a:"كل مؤسسة صحية،", heroH1b:"في رؤية واحدة.",
   heroTag:"العامة · الأسنان · المختبر · الأشعة · الصحة النفسية", panelTitle:"المختبر", panelSub:"تغطية الخدمة<br>في المؤسسات<br>الصحية",
-  heroL1:"مؤسسة صحية<br>في 10 ولايات", heroL2:"موظفًا<br>في المختبرات", meetLbl:"الفجوات بنظرة واحدة",
+  heroL1:"مؤسسة صحية<br>في 10 ولايات", heroL2:"موظفًا في الرعاية<br>الصحية بوزارة<br>الصحة (ظفار)", heroL3:"نسمة<br>في ظفار<br>سبتمبر 2026", meetLbl:"الفجوات بنظرة واحدة",
   footL:"خدمات ظفار الصحية · من ملفات المديرية · أُزيلت البيانات الشخصية", footR:"مصادر البيانات والملاحظات",
   tabs:{overview:"نظرة عامة",institutions:"المؤسسات",compare:"مقارنة",gaps:"الفجوات",lab:"المختبر",radiology:"الأشعة",audits:"التدقيق",data:"عن البيانات"},
-  H:"مستشفى", HC:"مركز صحي", Hs:"مستشفيات", HCs:"مراكز صحية",
+  H:"مستشفى", HC:"مركز صحي", PC:"مجمع صحي", Hs:"مستشفيات", HCs:"مراكز صحية", PCs:"مجمعات صحية",
   dom:{general:"الخدمات العامة", dental:"الأسنان", lab:"المختبر", radiology:"الأشعة", mental:"الصحة النفسية"}, domS:{general:"العامة", dental:"الأسنان", lab:"المختبر", radiology:"الأشعة", mental:"النفسية"}, visitS:"زيارة",
   all:"الكل", allWil:"كل الولايات", search:"ابحث عن مؤسسة…", results:"{n} مؤسسة",
   ovEyebrow:"نظرة على المحافظة", ovTitle:"الخدمات الصحية في ظفار", ovSub:"جميع المؤسسات الصحية في الولايات العشر، مع القوى العاملة والأجهزة في المختبر والأشعة، وحالة التدقيق للخدمات العامة والأسنان والصحة النفسية.",
-  kInst:"مؤسسة صحية", kInstS:"<b>{h}</b> مستشفيات · <b>{hc}</b> مركزًا صحيًا",
+  kInst:"مؤسسة صحية", kInstS:"<b>{h}</b> مستشفيات · <b>{hc}</b> مركزًا صحيًا · <b>{p}</b> مجمع صحي",
+  kStaff:"العاملون في الرعاية الصحية", kStaffS:"<b>وزارة الصحة</b>: الفئات الطبية والطبية المساعدة · نهاية يونيو 2025",
+  kPop:"سكان محافظة ظفار", kPopS:"السكان المسجلون · المركز الوطني للإحصاء · نهاية سبتمبر 2026",
   kLab:"موظفو المختبرات", kLabS:"<b>{a}</b> مختبرًا عاملاً · <b>{v}</b> زيارة · <b>{p}</b> مخطط",
   kRad:"فنيو الأشعة الحاليون", kRadS:"<b>+{n}</b> مطلوب في المرحلة القادمة",
   kExam:"فحوصات الأشعة 2025", kExamS:"<b>{u}</b> غرفة أشعة · <b>1</b> جهاز مقطعي",
@@ -895,7 +930,7 @@ const T = {
   stRadOk:"مكتمل", stRadShort:"نقص {n}", stRadNone:"لا توجد خدمة أشعة", stRadPlan:"ضمن الخطة المرحلية",
   note_approved:"تمت الموافقة على الخدمة", note_newproject:"مشروع جديد قيد الإنشاء", note_ready:"القسم جاهز بانتظار الفنيين", note_upcoming:"مشروع قادم",
   stEqOk:"تركيب {y}", stEqOld:"عمره {a} سنوات", stEqCond:"مُكهّن ولا يزال يعمل", stEqNone:"لا توجد أجهزة",
-  stAwait:"بانتظار التدقيق",
+  stAwait:"بانتظار التدقيق", stData:"بانتظار البيانات",
   insEyebrow:"الدليل", insTitle:"المؤسسات", insSub:"صفِّ حسب الولاية والنوع والخدمة. افتح أي مؤسسة لعرض المجالات الخمسة.",
   fAny:"أي خدمة", fLab:"بها مختبر", fNoLab:"بدون مختبر", fXray:"بها أشعة", fGap:"بها نقص في الكوادر",
   mLab:"موظفو المختبر", mRad:"فنيو الأشعة", mExam:"فحص / شهر",
@@ -945,14 +980,20 @@ const T = {
    "مركز صرفيت مدرج في قائمة الأشعة لأغسطس 2025 (بلا كوادر أو احتياج) لكنه غير مدرج في القائمة الجغرافية، لذا لا يظهر.",
    "مقشن مدرجة كمركز صحي في القائمة الجغرافية وكمستشفى في نموذج الأشعة؛ اعتُمدت القائمة الجغرافية.",
    "حدبين وصوب تتلقيان خدمة مختبر بزيارة جزئية (يومان)، وتُحتسبان كزيارة لا كمختبر عامل.",
+   "أُضيف مجمع صلالة الصحي ومستشفى السلطان قابوس (القديم) ومستشفى السلطان قابوس الجديد في نوفمبر 2026. لا تغطيهم قوائم المديرية للمختبر والأشعة بعد، لذا تظهر «بانتظار البيانات» ولا تدخل في إجماليات المختبر والأشعة ولا في نسب التغطية.",
+   "مستشفى السلطان قابوس الجديد (700 سرير) لم يبدأ التشغيل بعد، وتتوقع الوزارة افتتاحه في الربع الأخير من 2026.",
+   "العاملون في الرعاية الصحية (3,269) هم الفئات الطبية والطبية المساعدة بوزارة الصحة في ظفار بنهاية يونيو 2025 (النشرة الإحصائية لظفار، النصف الأول 2025). لا تشمل الفئات الأخرى ولا القطاعات خارج الوزارة.",
+   "عدد السكان (540,655) هو السكان المسجلون في ظفار بنهاية سبتمبر 2026 وفق المركز الوطني للإحصاء والمعلومات، محدّثًا من التعداد الإلكتروني 2020 (416,458 في ديسمبر 2020). ويشمل المقيمين الوافدين.",
    "مواقع الولايات على الخريطة تقريبية للتوضيح فقط."
   ],
   srcList:[
-   ["القائمة الجغرافية (الولاية ← المؤسسة)","43 مؤسسة، 10 ولايات"],
+   ["القائمة الجغرافية (الولاية ← المؤسسة)","43 مؤسسة، 10 ولايات، إضافة إلى 3 في صلالة (المجمع الصحي ومستشفى السلطان قابوس القديم والجديد)"],
    ["موظفو المختبر لكل مؤسسة","27 مؤسسة + 3 خدمات جديدة مخططة"],
    ["فنيو الأشعة والاحتياج على 3 مراحل، أغسطس 2025","42 مؤسسة"],
    ["فنيو الأشعة والاحتياج، فبراير 2026","22 مؤسسة"],
    ["النموذج الشامل لبيانات الأشعة — ظفار","18 منشأة: نظرة عامة، القوى العاملة، الأجهزة، الفحوصات، PACS"],
+    ["النشرة الإحصائية لصحة ظفار، النصف الأول 2025","العاملون في الرعاية الصحية بنهاية يونيو 2025"],
+    ["النشرة الإحصائية الشهرية — المركز الوطني للإحصاء، أكتوبر 2026","سكان ظفار بنهاية سبتمبر 2026"],
    
   ],
   srcS:"المصدر: {s}"
@@ -970,7 +1011,8 @@ const wn = w => LANG === "ar" ? WILAYAT[w].ar : w;
 
 /* ===================== derived model ===================== */
 INST.forEach(i => {
-  i.labStatus = typeof i.lab === "number" ? "active" : i.lab === "visit" ? "visit" : i.lab === "plan" ? "plan" : "none";
+  i.labStatus = typeof i.lab === "number" ? "active" : i.lab === "visit" ? "visit" : i.lab === "plan" ? "plan" : i.lab === "nodata" ? "nodata" : "none";
+  i.pending = i.lab === "nodata";
   i.labStaff = typeof i.lab === "number" ? i.lab : 0;
   i.radCur = i.r26 ? i.r26[0] : (i.r25 ? i.r25[0] : 0);
   i.radSrc = i.r26 ? "26" : "25";
@@ -989,7 +1031,8 @@ const WLIST = Object.keys(WILAYAT).sort((a,b) => INST.filter(i=>i.wil===b).lengt
 const byWil = w => INST.filter(i => i.wil === w);
 const sum = (arr, f) => arr.reduce((s, x) => s + (f(x) || 0), 0);
 const TOT = {
-  inst: INST.length, hosp: INST.filter(i=>i.type==="H").length,
+  inst: INST.length, hosp: INST.filter(i=>i.type==="H").length, hc: INST.filter(i=>i.type==="HC").length,
+  poly: INST.filter(i=>i.type==="PC").length, pending: INST.filter(i=>i.pending).length,
   labStaff: sum(INST, i=>i.labStaff), labActive: INST.filter(i=>i.labStatus==="active").length,
   labVisit: INST.filter(i=>i.labStatus==="visit").length, labPlan: INST.filter(i=>i.labStatus==="plan").length,
   radCur: sum(INST, i=>i.radCur), radNeed: sum(INST, i=>i.radNeed), radTarget: sum(INST, i=>i.radTarget),
@@ -1002,12 +1045,14 @@ const ICON = { good:"i-check", warn:"i-warn", serious:"i-warn", crit:"i-x", info
 const chip = (k, label, tip) => `<span class="chip st-${k}"${tip?` data-tip="${esc(tip)}"`:""}><svg aria-hidden="true"><use href="#${ICON[k]}"/></svg>${esc(label)}</span>`;
 const DOT = { good:"var(--good)", warn:"var(--warn)", serious:"var(--serious)", crit:"var(--crit)", info:"var(--info)", none:"var(--none)" };
 function labSt(i){
+  if (i.pending) return ["none", t("stData")];
   if (i.labStatus === "active") return ["good", t("stLabActive",{n:i.labStaff})];
   if (i.labStatus === "visit") return ["warn", t("stLabVisit")];
   if (i.labStatus === "plan") return ["info", t("stLabPlan")];
   return ["none", t("stLabNone")];
 }
 function radSt(i){
+  if (i.pending) return ["none", t("stData")];
   if (i.R || i.radCur > 0){
     return i.radNeed > 0 ? ["serious", t("stRadShort",{n:i.radNeed})] : ["good", t("stRadOk")];
   }
@@ -1016,6 +1061,7 @@ function radSt(i){
   return ["none", t("stRadNone")];
 }
 function eqSt(i){
+  if (i.pending) return ["none", t("stData")];
   if (!i.R) return ["none", t("stEqNone")];
   if (i.condemned) return ["crit", t("stEqCond")];
   if (i.oldest >= 10) return ["warn", t("stEqOld",{a:i.oldest})];
@@ -1069,7 +1115,7 @@ const UI = { wil:"", type:"", svc:"", q:"", cmp:["taqah","mirbat","thumrayt","ma
 
 VIEWS.overview = () => {
   const covRow = d => {
-    const n = d === "lab" || d === "radiology" ? TOT.inst : 0;
+    const n = d === "lab" || d === "radiology" ? TOT.inst - TOT.pending : 0;
     const pct = n / TOT.inst * 100;
     return `<div class="bar-row" style="grid-template-columns:minmax(120px,170px) 1fr auto">
       <span class="bl" style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" aria-hidden="true" style="color:var(--accent)"><use href="#${DOM_ICON[d]}"/></svg>${esc(t("dom."+d))}</span>
@@ -1077,23 +1123,25 @@ VIEWS.overview = () => {
       <span>${n ? `<span class="chip st-good"><svg aria-hidden="true"><use href="#i-check"/></svg>${esc(t("covData",{n,t:TOT.inst}))}</span>` : `<a class="chip st-none" href="${auditUrl(d)}" target="_blank" rel="noopener" style="text-decoration:none"><svg aria-hidden="true"><use href="#i-dash"/></svg>${esc(t("covNone"))} · ${esc(t("runAudit"))} ↗</a>`}</span></div>`;
   };
   const wilRows = WLIST.map(w => { const l = byWil(w);
-    const h = l.filter(i=>i.type==="H").length, c = l.length - h;
-    return { label: wn(w), href:"wil:"+w, segs:[{v:h,c:"var(--q550)"},{v:c,c:"var(--q250)"}],
-      tip:`<b>${esc(wn(w))}</b><br>${esc(t("Hs"))}: ${h}<br>${esc(t("HCs"))}: ${c}` }; });
+    const h = l.filter(i=>i.type==="H").length, p = l.filter(i=>i.type==="PC").length, c = l.length - h - p;
+    return { label: wn(w), href:"wil:"+w, segs:[{v:h,c:"var(--q550)"},{v:c,c:"var(--q250)"},{v:p,c:"var(--q400)"}],
+      tip:`<b>${esc(wn(w))}</b><br>${esc(t("Hs"))}: ${h}<br>${esc(t("HCs"))}: ${c}` + (p ? `<br>${esc(t("PCs"))}: ${p}` : "") }; });
   const labRows = WLIST.map(w => ({ label: wn(w), href:"wil:"+w, segs:[{v:sum(byWil(w),i=>i.labStaff),c:"var(--s1)"}] })).sort((a,b)=>b.segs[0].v-a.segs[0].v);
   const radRows = WLIST.map(w => { const l = byWil(w), c = sum(l,i=>i.radCur), n = sum(l,i=>i.radNeed);
     return { label: wn(w), href:"wil:"+w, segs:[{v:c,c:"var(--s1)"},{v:n,c:"var(--s2)"}], vLabel:`${c}<span style="color:var(--muted)"> +${n}</span>`,
       tip:`<b>${esc(wn(w))}</b><br>${esc(t("inPost"))}: ${c}<br>${esc(t("needNext"))}: ${n}` }; }).sort((a,b)=>(b.segs[0].v+b.segs[1].v)-(a.segs[0].v+a.segs[1].v));
   return head(t("ovEyebrow"), t("ovTitle"), t("ovSub")) +
-  `<div class="grid g-4">
-    ${kpi(t("kInst"), TOT.inst, t("kInstS",{h:TOT.hosp,hc:TOT.inst-TOT.hosp}))}
+  `<div class="grid g-3">
+    ${kpi(t("kInst"), TOT.inst, t("kInstS",{h:TOT.hosp,hc:TOT.hc,p:TOT.poly}))}
+    ${kpi(t("kStaff"), fmt(WORKFORCE.total), t("kStaffS"))}
+    ${kpi(t("kPop"), fmt(POPULATION.total), t("kPopS"))}
     ${kpi(t("kLab"), TOT.labStaff, t("kLabS",{a:TOT.labActive,v:TOT.labVisit,p:TOT.labPlan}))}
     ${kpi(t("kRad"), TOT.radCur, t("kRadS",{n:TOT.radNeed}))}
     ${kpi(t("kExam"), fmt(TOT.exams), t("kExamS",{u:TOT.xrayRooms}))}
   </div>
   <div class="grid g-12" style="margin-top:16px">
     ${box(t("mapT"), t("mapS"), mapSVG(), "span-7")}
-    ${box(t("wilT"), t("wilS"), legend([["var(--q550)",t("Hs")],["var(--q250)",t("HCs")]]) + `<div style="height:12px"></div>` + bars(wilRows), "span-5", "Geographic list")}
+    ${box(t("wilT"), t("wilS"), legend([["var(--q550)",t("Hs")],["var(--q250)",t("HCs")],["var(--q400)",t("PCs")]]) + `<div style="height:12px"></div>` + bars(wilRows), "span-5", "Geographic list")}
     ${box(t("labWT"), t("labWS"), bars(labRows), "span-6", "Laboratory staff list")}
     ${box(t("radWT"), t("radWS"), legend([["var(--s1)",t("inPost")],["var(--s2)",t("needNext")]]) + `<div style="height:12px"></div>` + bars(radRows), "span-6", "Radiographers Feb 2026 / Aug 2025")}
     ${box(t("covT"), t("covS"), `<div class="bars" style="gap:10px">${DOMS.map(covRow).join("")}</div>`, "span-12")}
@@ -1105,7 +1153,7 @@ function filtered(){
   return INST.filter(i =>
     (!UI.wil || i.wil === UI.wil) && (!UI.type || i.type === UI.type) &&
     (!q || i.en.toLowerCase().includes(q) || i.ar.includes(UI.q.trim()) || i.wil.toLowerCase().includes(q) || WILAYAT[i.wil].ar.includes(UI.q.trim())) &&
-    (!UI.svc || (UI.svc === "lab" && i.labStatus === "active") || (UI.svc === "nolab" && i.labStatus !== "active") ||
+    (!UI.svc || (UI.svc === "lab" && i.labStatus === "active") || (UI.svc === "nolab" && i.labStatus !== "active" && i.labStatus !== "nodata") ||
       (UI.svc === "xray" && !!i.R) || (UI.svc === "gap" && (i.radNeed > 0 || i.labStatus === "plan" || i.labStatus === "visit"))));
 }
 const wilSelect = (val, attr) => `<select class="select" ${attr}><option value="">${esc(t("allWil"))}</option>${WLIST.map(w=>`<option value="${esc(w)}"${val===w?" selected":""}>${esc(wn(w))} (${byWil(w).length})</option>`).join("")}</select>`;
@@ -1115,7 +1163,7 @@ VIEWS.institutions = () => head(t("insEyebrow"), t("insTitle"), t("insSub")) +
   `<div class="controls">
     <input class="input" type="search" id="q" placeholder="${esc(t("search"))}" value="${esc(UI.q)}" style="flex:1 1 220px;max-width:320px">
     ${wilSelect(UI.wil, 'id="fwil"')}
-    ${segCtl("type", UI.type, [["",t("all")],["H",t("Hs")],["HC",t("HCs")]])}
+    ${segCtl("type", UI.type, [["",t("all")],["H",t("Hs")],["HC",t("HCs")],["PC",t("PCs")]])}
     <select class="select" id="fsvc">${[["",t("fAny")],["lab",t("fLab")],["nolab",t("fNoLab")],["xray",t("fXray")],["gap",t("fGap")]].map(([v,l])=>`<option value="${v}"${UI.svc===v?" selected":""}>${esc(l)}</option>`).join("")}</select>
     <span class="count" id="cnt"></span>
   </div><div class="cards" id="cards"></div>`;
@@ -1235,7 +1283,7 @@ VIEWS.gaps = () => {
   const lg = `<div class="legend" style="gap:8px">${[["good","lgGood"],["warn","lgWarn"],["serious","lgSerious"],["crit","lgCrit"],["info","lgInfo"],["none","lgNone"]].map(([k,l])=>chip(k,t(l))).join("")}</div>`;
   return head(t("gapEyebrow"), t("gapTitle"), t("gapSub")) +
   `<div class="grid g-4">
-    ${kpi(t("gNoLab"), noLab.length, t("gNoLabS",{t:TOT.inst,p:TOT.labPlan}))}
+    ${kpi(t("gNoLab"), noLab.length, t("gNoLabS",{t:TOT.inst-TOT.pending,p:TOT.labPlan}))}
     ${kpi(t("gVisit"), TOT.labVisit, INST.filter(i=>i.labStatus==="visit").map(nm).map(esc).join(" · "))}
     ${kpi(t("gShort"), TOT.radNeed, `${short.length} ${esc(t("colInst"))}`)}
     ${kpi(t("gOld"), old.length, old.map(nm).map(esc).join(" · "))}
@@ -1251,10 +1299,10 @@ VIEWS.gaps = () => {
 
 /* ---------- lab ---------- */
 VIEWS.lab = () => {
-  const list = INST.filter(i=>!UI.labWil || i.wil===UI.labWil);
+  const list = INST.filter(i=>!i.pending && (!UI.labWil || i.wil===UI.labWil));
   const staffed = list.filter(i=>i.labStatus==="active").sort((a,b)=>b.labStaff-a.labStaff || nm(a).localeCompare(nm(b)));
   const rows = staffed.map(i=>({label:nm(i), href:"inst:"+i.id, segs:[{v:i.labStaff,c:"var(--s1)"}], tip:`<b>${esc(nm(i))}</b><br>${esc(wn(i.wil))}<br>${esc(t("dLabStaff"))}: ${i.labStaff}`}));
-  const cov = WLIST.map(w=>{ const l=byWil(w), a=l.filter(i=>i.labStatus==="active").length, v=l.filter(i=>i.labStatus==="visit").length, p=l.filter(i=>i.labStatus==="plan").length;
+  const cov = WLIST.map(w=>{ const l=byWil(w).filter(i=>!i.pending), a=l.filter(i=>i.labStatus==="active").length, v=l.filter(i=>i.labStatus==="visit").length, p=l.filter(i=>i.labStatus==="plan").length;
     return {label:wn(w), href:"wil:"+w, segs:[{v:a,c:"var(--s1)"},{v:v,c:"var(--s4)"},{v:p,c:"var(--q250)"},{v:l.length-a-v-p,c:"var(--track)"}], vLabel:`${Math.round(a/l.length*100)}%`,
       tip:`<b>${esc(wn(w))}</b><br>${esc(t("lActive"))}: ${a}<br>${esc(t("lVisit"))}: ${v}<br>${esc(t("lPlan"))}: ${p}<br>${esc(t("lNone"))}: ${l.length-a-v-p}`}; });
   const lst = (st) => INST.filter(i=>i.labStatus===st && (!UI.labWil||i.wil===UI.labWil)).map(i=>`<button type="button" class="chip st-${st==="plan"?"info":st==="visit"?"warn":"none"}" data-inst="${i.id}" style="border:0;cursor:pointer"><svg aria-hidden="true"><use href="#${st==="plan"?"i-info":st==="visit"?"i-warn":"i-dash"}"/></svg>${esc(nm(i))}</button>`).join(" ") || "—";
@@ -1351,8 +1399,11 @@ function applyStatic(){
   $$(".js-theme use").forEach(u => u.setAttribute("href", dark ? "#i-sun" : "#i-moon"));
   $$(".js-lang").forEach(b => b.setAttribute("aria-label", LANG==="ar" ? "Switch to English" : "التبديل إلى العربية"));
   document.title = LANG === "ar" ? "خدمات ظفار الصحية" : "Dhofar Health Services";
-  $("#heroN1").textContent = TOT.inst; $("#heroN2").textContent = TOT.labStaff;
-  $("#heroTrack").style.setProperty("--fill", ((TOT.labActive+TOT.labVisit)/TOT.inst*100).toFixed(1)+"%");
+  $("#heroN1").textContent = TOT.inst;
+  $("#heroN2").textContent = fmt(WORKFORCE.total);
+  $("#heroN3").textContent = Math.round(POPULATION.total / 1000) + "K";
+  $("#heroN3").title = fmt(POPULATION.total);
+  $("#heroTrack").style.setProperty("--fill", ((TOT.labActive+TOT.labVisit)/(TOT.inst-TOT.pending)*100).toFixed(1)+"%");
   const mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = dark ? "#081020" : "#E6EDF6";
 }
 function bindView(){
